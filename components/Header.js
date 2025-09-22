@@ -4,12 +4,13 @@ import Link from "next/link";
 import LoginModal from "./modal/LoginModal";
 import RegisterModal from "./modal/RegisterModal";
 import VerifyModal from "./modal/VerifyModal";
+import { useAppContext } from "@/context/context";
 
 const Header = () => {
   const [open, setOpen] = useState(false); // mobile menu
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showVerify, setShowVerify] = useState(false);
+  const { user, logout, isLoggedIn } = useAppContext();
 
   const navLinks = [
     { name: "Login", href: "#" },
@@ -53,20 +54,41 @@ const Header = () => {
 
           {/* Desktop Links */}
           <ul className="desktop-links">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href="#"
-                  className="nav-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(link);
-                  }}
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
+            {isLoggedIn ? (
+              <>
+                <li>
+                  <div className="user-info">
+                    <span>Welcome, {user?.name}</span>
+                  </div>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onClick={() => {
+                      logout();
+                      setOpen(false);
+                    }}
+                    className="nav-link"
+                  >
+                    Logout
+                  </a>
+                </li>
+              </>
+            ) : (
+              navLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href="#"
+                    className="nav-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(link);
+                    }}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              )))}
           </ul>
 
           {/* Hamburger for Mobile */}
@@ -94,32 +116,52 @@ const Header = () => {
             </button>
             <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
             <ul className="nav-links">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href="#"
-                    className="nav-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(link);
-                    }}
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
+              {isLoggedIn ? (
+                <>
+                  <li>
+                    <div className="user-info">
+                      <span>Welcome, {user?.name}</span>
+                    </div>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      onClick={() => {
+                        logout();
+                        setOpen(false);
+                      }}
+                      className="nav-link"
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
+              ) : (
+                navLinks.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href="#"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavClick(link);
+                      }}
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                )))}
             </ul>
           </div>
         </div>
       </div>
-
       {/* Modals */}
       <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
       <RegisterModal
         show={showRegister}
         onHide={() => setShowRegister(false)}
       />
-      <VerifyModal show={showVerify} onHide={() => setShowVerify(false)} />
+      {/* <VerifyModal show={showVerify} onHide={() => setShowVerify(false)} /> */}
     </header>
   );
 };

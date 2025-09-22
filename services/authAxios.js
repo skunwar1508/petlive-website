@@ -19,7 +19,7 @@ const authAxios = axios.create({
 authAxios.interceptors.request.use((config) => {  
     bodyAnimation('add', config.loader);
     // let token = config.token?config.token:reactLocalStorage.get('token');
-    let token = reactLocalStorage.get('authToken');
+    let token = reactLocalStorage.get('token');
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`

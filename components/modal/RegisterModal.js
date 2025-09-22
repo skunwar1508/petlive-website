@@ -7,9 +7,11 @@ import * as Yup from "yup";
 import UnauthAxios from "@/services/unauthAxios";
 import { ErrorMessage } from "../formik/errorMessage";
 import common from "@/services/common";
+import { useAppContext } from "@/context/context";
 
 const RegisterModal = ({ show, onHide }) => {
     const [otpSent, setOtpSent] = useState(false);
+    const { login } = useAppContext();
 
     const initialValues = {
         name: "",
@@ -34,6 +36,7 @@ const RegisterModal = ({ show, onHide }) => {
                 console.log("data", data);
                 common.success(data?.message || "Registration successful");
                 localStorage.setItem("token", data?.data?.token);
+                login(data?.data);
                 setOtpSent(false);
                 resetForm();
                 onHide();

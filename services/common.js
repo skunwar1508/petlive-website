@@ -341,6 +341,12 @@ rangMaxDate: (date) => {
     newPostData.bin = bin || "";
     return newPostData;
   },
+  truncateAndClean: (str, length) => {
+    if (!str || typeof str !== "string") return "";
+    const cleanStr = str.replace(/(<([^>]+)>)/gi, "");
+    if (typeof length !== "number" || length <= 0) return cleanStr;
+    return cleanStr.length > length ? cleanStr.slice(0, length) + "..." : cleanStr;
+  },
   capitalizeFirstLetter: (string) => {
     if (string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

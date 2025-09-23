@@ -35,7 +35,7 @@ const BlogSection = () => {
                 {
                   blogs?.map((blog, index) => (
                     <div className={`col-lg-6 ${index === 0 ? '' : 'd-flex flex-column gap-3'}`} key={index}>
-                      <Link href="/blog" className="blog-card large-card">
+                      <Link href={`/blogs/${blog?._id}/${blog?.slug}`} className="blog-card large-card">
                         <img
                           src={blog?.coverImage?.path || '/assets/images/default.png'}
                           alt={blog?.title}

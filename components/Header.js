@@ -62,6 +62,11 @@ const Header = () => {
                   </div>
                 </li>
                 <li>
+                  <Link href="/blogs" className="nav-link">
+                    Blogs
+                  </Link>
+                </li>
+                <li>
                   <a
                     href="#"
                     onClick={() => {

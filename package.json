@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "build:prod": "set REACT_APP_SERVER=production && react-scripts build",
-    "build:staging": "set REACT_APP_SERVER=staging-production && react-scripts build",
+    "build:prod": "set REACT_APP_SERVER=production && next build",
+    "build:staging": "set REACT_APP_SERVER=staging-production && next build",
     "start": "next start",
     "lint": "next lint"
   },

@@ -30,16 +30,16 @@ const ServicesSection = () => {
 
   const items = [
     {
-      title: "Veterinary Service",
-      desc: "24/7 online consultations, e-prescriptions, and personalized health plans.",
-    },
-    {
       title: "Community",
-      desc: "Join topic-based groups, share tips, and get support from fellow pet lovers.",
+      desc: "Connect with thousands of pet parents, share experiences, get advice, and build lasting friendships in our caring community.",
     },
     {
-      title: "Pet Service",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae ut a at faucibus sollicitudin enim.",
+      title: "Expert Blog",
+      desc: "Access expert advice, tips, and stories from veterinarians and experienced pet owners to give your pets the best care.",
+    },
+    {
+      title: "Veterinary Service",
+      desc: "Round-the-clock access to professional veterinary consultations and emergency care for your beloved pets.",
     },
   ];
 

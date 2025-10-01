@@ -52,7 +52,7 @@ export default function JoinedCommunity() {
         <title>Furr Baby Community</title>
         <meta name="description" content="Read our latest pet care blogs" />
       </Head>
-      <Header />
+
       <main className="">
         <section className="page-section community-page">
           <h1 className="heading-secondary">Joined Community</h1>
@@ -78,7 +78,6 @@ export default function JoinedCommunity() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

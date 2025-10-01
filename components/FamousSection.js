@@ -1,6 +1,7 @@
 const FamousSection = () => {
   return (
-    <section className="famous-section">
+    <section className="famous-section bg-paw-img">
+      <span className="third-bg"></span>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-sm-6 d-flex justify-content-center">
@@ -18,7 +19,9 @@ const FamousSection = () => {
                 Create a free digital scrapbook to celebrate your pet’s quirks,
                 adventures, and secret talents. No red carpet needed!
               </p>
-              <button class="btn arw-btn">Start Creating →</button>
+              <button className="btn arw-btn">
+                Start Creating <span class="arrow">→</span>
+              </button>
             </div>
           </div>
         </div>

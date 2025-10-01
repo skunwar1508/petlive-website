@@ -61,8 +61,8 @@ export default function Blogs() {
         <div className="container">
           <div className="row g-4">
             <div className="col-lg-12 d-flex flex-column gap-3">
-              {paginData.list.length > 0 ? (
-                paginData.list.map((blog, index) => (
+              {paginData?.list?.length > 0 ? (
+                paginData?.list?.map((blog, index) => (
                   <Link href={`/blogs/${blog?._id}/${blog?.slug}`} key={index}>
                     <div className="blog-card  ">
                       <img
@@ -80,16 +80,18 @@ export default function Blogs() {
               ) : (
                 <p>No blogs available</p>
               )}
-              <div className="d-flex justify-content-center mt-4">
-                <PageModule
-                totalItems={paginData.totalItemsCount}
-                itemsPerPage={paginData.itemsCountPerPage}
-                currentPage={paginData.activePage}
-                range={3}
-                theme="paging-4"
-                pageChange={pageHasChanged}
-              />
-              </div>
+              {paginData?.list?.length > 0 && (
+                <div className="d-flex justify-content-center mt-4">
+                  <PageModule
+                    totalItems={paginData.totalItemsCount}
+                    itemsPerPage={paginData.itemsCountPerPage}
+                    currentPage={paginData.activePage}
+                    range={3}
+                    theme="paging-4"
+                    pageChange={pageHasChanged}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

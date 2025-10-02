@@ -592,7 +592,34 @@
 /* ################################################### */
 
 .discover-section {
-  padding: 96px 0;
+  padding: 96px 64px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+.discover-section h3 {
+  font-size: 36px;
+}
+.discover-section p {
+  font-size: 20px;
+  font-weight: 700;
+}
+.discover-section.bg-paw-img {
+  color: var(--primary-color);
+}
+.discover-section.bg-paw-img-dark {
+  color: #fff;
+}
+.discover-section.bg-paw-img p {
+  color: var(--primary-color);
+}
+.discover-section.bg-paw-img-dark p {
+  color: #fff;
+}
+
+.discover-section.bg-paw-img {
+  background-color: var(--primary-color-light);
+}
+.discover-section.bg-paw-img-dark {
   background-color: var(--primary-color);
 }
 
@@ -616,6 +643,48 @@
 .discover-section a {
   color: var(--primary-color);
   text-align: center;
+}
+.discover-section .form-input {
+  max-width: 632px;
+  width: 100%;
+  margin: 0 auto 32px;
+}
+.discover-section .btn-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+.discover-section .btn {
+  border: 2px solid var(--text-color);
+  color: #fff;
+  min-width: 202px;
+  box-shadow: 0 4px 0 var(--text-color);
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.discover-section.bg-paw-img .btn {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+.discover-section.bg-paw-img-dark .btn {
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+}
+
+.discover-section.bg-paw-img .btn:hover,
+.discover-section.bg-paw-img .btn.active {
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+}
+
+.discover-section.bg-paw-img-dark .btn:hover,
+.discover-section.bg-paw-img-dark .btn.active {
+  background-color: var(--primary-color);
+  color: #fff;
 }
 
 .arw-link {

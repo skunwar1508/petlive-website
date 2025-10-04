@@ -260,7 +260,7 @@
   background-image: url("/images/side-left-bg.png");
   background-repeat: no-repeat;
   background-size: 100px;
-  position: absolute;
+  position: fixed;
   top: 20%;
   left: 0px;
   width: 100px;
@@ -273,7 +273,7 @@
   background-image: url("/images/side-right-bg.png");
   background-repeat: no-repeat;
   background-size: 100px;
-  position: absolute;
+  position: fixed;
   top: 40%;
   right: 0px;
   width: 100px;
@@ -972,4 +972,169 @@
   text-align: center;
   padding: 64px 0;
   position: relative;
+}
+
+/* ################################################### */
+/* ########    Community Chat Page STYLE              ######## */
+/* ################################################### */
+.community-chat-page {
+}
+.community-chat-page h1 {
+  text-align: left;
+}
+
+.communitChatListBody {
+  height: 60vh;
+  overflow: auto;
+  margin-bottom: 12px;
+}
+
+.communitChatListBody .CommunityCommetBody {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 36px;
+  gap: 24px;
+}
+
+.CommunityCommetBody .aritcleUseImg {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CommunityCommetBody .aritcleUseImg img {
+  object-fit: cover;
+}
+
+.aritcleCommentContent {
+  text-align: left;
+}
+.aritcleCommentContent h4 {
+  margin-bottom: 5px;
+  font-size: 24px;
+}
+.aritcleCommentContent p {
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+.aritcleCommentContent .chatImg {
+  width: 264px;
+  height: 264px;
+  display: flex;
+}
+.aritcleCommentContent .chatImg img {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+
+  border: 2px solid var(--text-color);
+  box-shadow: 0 4px 0px var(--text-color);
+  background-color: rgb(250, 238, 224);
+  border-radius: 12px;
+  align-items: center;
+  transition: transform 0.2s;
+  display: flex;
+  overflow: hidden;
+}
+
+.aritcleCommentContent .communityReplyComtLts {
+  display: flex;
+  padding-left: 0;
+  gap: 24px;
+  font-size: 18px;
+}
+.aritcleCommentContent .communityReplyComtLts li,
+.aritcleCommentContent .communityReplyComtLts li a {
+  display: flex;
+  color: var(--primary-color);
+  gap: 12px;
+}
+.aritcleCommentContent .communityReplyComtLts .flagDropdown .btn {
+  padding: 0;
+  font-size: 16px;
+}
+.aritcleCommentContent .communityReplyComtLts .flagDropdown .btn:hover {
+  box-shadow: none;
+  transform: none;
+}
+.aritcleCommentContent .communityReplyComtLts img {
+  width: 20px;
+}
+.aritcleCommentContent .communityReplyComtLts li:hover {
+  transform: translateY(-1%) scale(1.05);
+  cursor: pointer;
+}
+
+/* Wrapper keeps things tidy */
+.patientWritMsgBx .msgBox {
+  position: relative;
+}
+
+/* Input styled like the screenshot */
+.patientWritMsgBx .msg-input {
+  height: 60px; /* tall pill */
+  background: #fff7ef; /* light cream */
+  border: 2px solid #171717; /* dark outline */
+  border-radius: 12px;
+  padding: 0 108px 0 16px; /* right padding for icons */
+  box-shadow: inset 0 -3px 0 #171717; /* thicker bottom edge look */
+  outline: none;
+}
+
+.patientWritMsgBx .msg-input::placeholder {
+  color: var(--primary-color);
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* Icon buttons inside the field */
+.patientWritMsgBx .icon-btn {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: var(--primary-color);
+  opacity: 0.9;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.patientWritMsgBx .icon-btn:hover,
+.patientWritMsgBx .icon-btn:focus {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Positions: upload then send */
+.patientWritMsgBx .icon-btn.upload {
+  right: 56px;
+}
+.patientWritMsgBx .icon-btn.send {
+  right: 12px;
+}
+
+/* Keep Bootstrap’s focus ring tidy on the whole control */
+.patientWritMsgBx .msg-input:focus {
+  box-shadow: inset 0 -3px 0 #171717, 0 0 0 0.15rem rgba(122, 78, 30, 0.15);
+  background: (--primary-color-light);
+}
+
+/* Optional: tighten on very small screens */
+@media (max-width: 380px) {
+  .patientWritMsgBx .msg-input {
+    padding-right: 92px;
+  }
+  .patientWritMsgBx .icon-btn.upload {
+    right: 50px;
+  }
 }

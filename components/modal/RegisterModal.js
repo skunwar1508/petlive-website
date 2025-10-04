@@ -124,9 +124,9 @@ const RegisterModal = ({ show, onHide }) => {
           {otpSent && (
             <>
               <div className="d-flex justify-content-end mb-1">
-                <Link onClick={() => handleResendOTP()} className="resend-link">
+                <a onClick={() => handleResendOTP()} className="resend-link">
                   Resend OTP
-                </Link>
+                </a>
               </div>
               <div className="mb-5">
                 <input

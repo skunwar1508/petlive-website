@@ -8,6 +8,7 @@ import {
   faStepForward,
   faFastForward,
 } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function PageModule(props) {
   const searchParams = useSearchParams();

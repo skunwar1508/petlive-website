@@ -10,6 +10,7 @@ import FamousSection from "@/components/FamousSection";
 import ServicesSection from "@/components/ServicesSection";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
+import DiscoverSection from "@/components/DiscoverSection";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -29,10 +30,11 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <TrustBadges />
-      <FamousSection />
       <ServicesSection />
+      <DiscoverSection />
+      {/* <TrustBadges /> */}
       <BlogSection />
+      <FamousSection />
     </>
   );
 }

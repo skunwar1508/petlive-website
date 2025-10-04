@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 const BlogSection = () => {
   const [blogs, setBlogs] = useState([]);
 
-
   // Fetch blogs from an API or use static data
   const fetchBlogs = async () => {
     try {
@@ -17,7 +16,6 @@ const BlogSection = () => {
     }
   };
   useEffect(() => {
-
     fetchBlogs();
   }, []);
 
@@ -28,33 +26,37 @@ const BlogSection = () => {
         <div className="row g-4">
           {/* Left side - big blog */}
 
-
-          {
-            blogs.length > 0 ? (
-              <>
-                {
-                  blogs?.map((blog, index) => (
-                    <div className={`col-lg-6 ${index === 0 ? '' : 'd-flex flex-column gap-3'}`} key={index}>
-                      <Link href={`/blogs/${blog?._id}/${blog?.slug}`} className="blog-card large-card">
-                        <img
-                          src={blog?.coverImage?.path || '/assets/images/default.png'}
-                          alt={blog?.title}
-                          className="img-fluid"
-                        />
-                        <div className="blog-text">
-                          <h5>{blog?.title}</h5>
-                          <p>{common.truncateAndClean(blog?.content, 100)}</p>
-                        </div>
-                      </Link>
+          {blogs.length > 0 ? (
+            <>
+              {blogs?.map((blog, index) => (
+                <div
+                  className={`col-lg-6 ${
+                    index === 0 ? "" : "d-flex flex-column gap-3"
+                  }`}
+                  key={index}
+                >
+                  <Link
+                    href={`/blogs/${blog?._id}/${blog?.slug}`}
+                    className="blog-card large-card"
+                  >
+                    <img
+                      src={
+                        blog?.coverImage?.path || "/assets/images/default.png"
+                      }
+                      alt={blog?.title}
+                      className="img-fluid"
+                    />
+                    <div className="blog-text">
+                      <h5>{blog?.title}</h5>
+                      <p>{common.truncateAndClean(blog?.content, 100)}</p>
                     </div>
-                  ))
-                }
-              </>
-            ) : (
-              <p>No blogs available</p>
-            )
-          }
-
+                  </Link>
+                </div>
+              ))}
+            </>
+          ) : (
+            <p>No blogs available</p>
+          )}
         </div>
       </div>
     </section>

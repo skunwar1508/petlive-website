@@ -16,7 +16,7 @@
     flex-direction: column-reverse;
   }
   .hero-section .text-col {
-    padding: 0;
+    padding: 0 15px;
   }
 
   .footer-bottom {

@@ -31,7 +31,7 @@ export default function CommiunityInfo() {
         <title>Furr Baby Blog</title>
         <meta name="description" content="Read our latest pet care blogs" />
       </Head>
-      <Header />
+
       <main className="">
         <section className="page-section blog-detail-page">
           <div className="container">
@@ -76,11 +76,10 @@ export default function CommiunityInfo() {
                 secret talents. No red carpet needed!
               </p>
             </div>
-            <div className="cta-btn">Join Community</div>
+            <button className="cta-btn">Join Community</button>
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

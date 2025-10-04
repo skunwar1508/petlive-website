@@ -52,7 +52,7 @@ export default function NewCommunity() {
         <title>Furr Baby Community</title>
         <meta name="description" content="Read our latest pet care blogs" />
       </Head>
-      <Header />
+
       <main className="">
         <section className="page-section community-page">
           <h1 className="heading-secondary">New Community</h1>
@@ -70,7 +70,7 @@ export default function NewCommunity() {
                     <div className="blog-text">
                       <h5>{blog.title}</h5>
                       <p>{blog.desc}</p>
-                      <div className="cta-btn">Join Community</div>
+                      <button className="cta-btn">Join Community</button>
                     </div>
                   </div>
                 </div>
@@ -79,7 +79,6 @@ export default function NewCommunity() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

@@ -67,7 +67,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     onClick={() => {
                       logout();
@@ -76,13 +76,13 @@ const Header = () => {
                     className="nav-link"
                   >
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </>
             ) : (
               navLinks.map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href="#"
                     className="nav-link"
                     onClick={(e) => {
@@ -91,9 +91,10 @@ const Header = () => {
                     }}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
-              )))}
+              ))
+            )}
           </ul>
 
           {/* Hamburger for Mobile */}
@@ -129,7 +130,7 @@ const Header = () => {
                     </div>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="#"
                       onClick={() => {
                         logout();
@@ -138,13 +139,13 @@ const Header = () => {
                       className="nav-link"
                     >
                       Logout
-                    </a>
+                    </Link>
                   </li>
                 </>
               ) : (
                 navLinks.map((link) => (
                   <li key={link.name}>
-                    <a
+                    <Link
                       href="#"
                       className="nav-link"
                       onClick={(e) => {
@@ -153,9 +154,10 @@ const Header = () => {
                       }}
                     >
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
-                )))}
+                ))
+              )}
             </ul>
           </div>
         </div>

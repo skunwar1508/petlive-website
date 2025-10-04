@@ -2,7 +2,12 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFastBackward, faStepBackward, faStepForward, faFastForward } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFastBackward,
+  faStepBackward,
+  faStepForward,
+  faFastForward,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function PageModule(props) {
   const searchParams = useSearchParams();
@@ -33,7 +38,7 @@ export default function PageModule(props) {
   for (let i = startPage; i <= endPage; i++) {
     pageItems.push(
       <li key={i} className={`page-item${currentPage === i ? " active" : ""}`}>
-        <a
+        <Link
           title={`Page No ${i}`}
           className="page-link"
           href={`${url}page=${i}`}
@@ -45,7 +50,7 @@ export default function PageModule(props) {
           <span>
             <b>{i}</b>
           </span>
-        </a>
+        </Link>
       </li>
     );
   }
@@ -54,7 +59,7 @@ export default function PageModule(props) {
     <div className={`table_botm_paging ${theme}`}>
       <ul className="pagination">
         <li className={`page-item${currentPage === 1 ? " disabled" : ""}`}>
-          <a
+          <Link
             title="First Page"
             className="page-link"
             href={`${url}page=1`}
@@ -66,10 +71,10 @@ export default function PageModule(props) {
             <span>
               <FontAwesomeIcon icon={faFastBackward} />
             </span>
-          </a>
+          </Link>
         </li>
         <li className={`page-item${currentPage === 1 ? " disabled" : ""}`}>
-          <a
+          <Link
             title="Previous Page"
             className="page-link"
             href={`${url}page=${Math.max(1, currentPage - 1)}`}
@@ -81,11 +86,15 @@ export default function PageModule(props) {
             <span>
               <FontAwesomeIcon icon={faStepBackward} />
             </span>
-          </a>
+          </Link>
         </li>
         {pageItems}
-        <li className={`page-item${currentPage === totalPages ? " disabled" : ""}`}>
-          <a
+        <li
+          className={`page-item${
+            currentPage === totalPages ? " disabled" : ""
+          }`}
+        >
+          <Link
             title="Next Page"
             className="page-link"
             href={`${url}page=${Math.min(totalPages, currentPage + 1)}`}
@@ -97,10 +106,14 @@ export default function PageModule(props) {
             <span>
               <FontAwesomeIcon icon={faStepForward} />
             </span>
-          </a>
+          </Link>
         </li>
-        <li className={`page-item${currentPage === totalPages ? " disabled" : ""}`}>
-          <a
+        <li
+          className={`page-item${
+            currentPage === totalPages ? " disabled" : ""
+          }`}
+        >
+          <Link
             title="Last Page"
             className="page-link"
             href={`${url}page=${totalPages}`}
@@ -112,7 +125,7 @@ export default function PageModule(props) {
             <span>
               <FontAwesomeIcon icon={faFastForward} />
             </span>
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

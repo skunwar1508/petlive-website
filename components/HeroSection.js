@@ -1,12 +1,12 @@
 export default function HeroSection() {
   return (
     <section className="hero-section">
-      <div class="container">
+      <div className="container">
         <div className="row">
           <div className="col-md-7 text-col">
             <div>
               <h1 className="heading-primary">
-                Where Pets Find <span className="paw-highlight">Love</span>,
+                Where Pets Find Love,
                 <br /> Care & Community
               </h1>
               <p>
@@ -14,9 +14,10 @@ export default function HeroSection() {
                 <br /> join pet lover communities,
                 <br /> and even find your pet’s perfect playdate.
               </p>
-              <button className="btn cta-btn">
-                Join the Pack – It’s Free!
-              </button>
+              <div className="d-flex flex-wrap gap-3">
+                <button className="btn cta-btn">Explore Our Community</button>
+                <button className="btn cta-btn">Read Our Blog</button>
+              </div>
             </div>
           </div>
 

@@ -53,6 +53,20 @@ img {
   transform: translateY(0);
 }
 
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
+  color: var(--primary-color-light);
+  background-color: var(--primary-color);
+  border-color: var(--text-color);
+}
+
+.errorMsg {
+  color: red;
+  margin: 4px 8px 2px;
+}
 /**************************/
 /* GENRAL REUSABLE COMPONENTS */
 /**************************/

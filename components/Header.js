@@ -62,6 +62,11 @@ const Header = () => {
                   </div>
                 </li>
                 <li>
+                  <Link href="/community" className="nav-link">
+                    Community
+                  </Link>
+                </li>
+                <li>
                   <Link href="/blogs" className="nav-link">
                     Blogs
                   </Link>
@@ -128,6 +133,16 @@ const Header = () => {
                     <div className="user-info">
                       <span>Welcome, {user?.name}</span>
                     </div>
+                  </li>
+                  <li>
+                    <Link href="/community" className="nav-link">
+                      Community
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/blogs" className="nav-link">
+                      Blogs
+                    </Link>
                   </li>
                   <li>
                     <Link

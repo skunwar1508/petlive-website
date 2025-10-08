@@ -35,12 +35,16 @@ const DiscoverSection = () => {
           {blogs.slice(0).map((blog, index) => (
             <div key={index} className="col-lg-4 d-flex flex-column gap-3">
               <div className="blog-card  ">
-                <img src={blog.img} alt={blog.title} className="img-fluid" />
+                <img
+                  src={blog.img}
+                  alt={blog.title}
+                  className="blog-card-img img-fluid"
+                />
                 <div className="blog-text">
                   <h5>{blog.title}</h5>
-                  <Link className="arw-link" href="#">
+                  <Link className="arw-link" href="/community">
                     {blog.link}
-                    <span class="arrow">→</span>
+                    <span className="arrow">→</span>
                   </Link>
                 </div>
               </div>

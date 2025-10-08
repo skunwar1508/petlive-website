@@ -8,7 +8,9 @@ import Moment from "react-moment";
 import common from "@/services/common";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-const DateFormate = dynamic(() => import("@/components/DateFormate"), { ssr: false });
+const DateFormate = dynamic(() => import("@/components/DateFormate"), {
+  ssr: false,
+});
 
 export default function BlogDetail() {
   const [blogDetails, setBlogDetails] = useState({});
@@ -35,7 +37,7 @@ export default function BlogDetail() {
         method: "POST",
         url: `/blog/paginate`,
         data: {
-          createdAt: -1
+          createdAt: -1,
         },
       });
       setRecentBlogs(res?.data?.data || []);
@@ -51,16 +53,18 @@ export default function BlogDetail() {
 
   return (
     <>
-
       <section className="page-section blog-detail-page">
         <div className="container">
           <div className="row mb-5">
             <div className="col-lg-12 ">
               <div href="/blog" className="blog-card large-card ">
                 <img
-                  src={blogDetails?.coverImage?.path || "/assets/images/default.png"}
+                  src={
+                    blogDetails?.coverImage?.path ||
+                    "/assets/images/default.png"
+                  }
                   alt={blogDetails?.title}
-                  className="img-fluid"
+                  className=" img-fluid"
                 />
               </div>
             </div>
@@ -70,8 +74,15 @@ export default function BlogDetail() {
               <h3 className="heading-tertiary">
                 {blogDetails?.title || "Blog Title"}
               </h3>
-              <p><DateFormate format="DD MMMM YYYY" date={blogDetails?.createdAt} /></p>
-              <div dangerouslySetInnerHTML={{ __html: blogDetails?.content }}></div>
+              <p>
+                <DateFormate
+                  format="DD MMMM YYYY"
+                  date={blogDetails?.createdAt}
+                />
+              </p>
+              <div
+                dangerouslySetInnerHTML={{ __html: blogDetails?.content }}
+              ></div>
             </div>
             <div className="col-lg-4 ">
               <h3 className="heading-tertiary">Recent Blogs</h3>
@@ -79,9 +90,11 @@ export default function BlogDetail() {
                 <Link href={`/blogs/${blog?._id}/${blog?.slug}`} key={index}>
                   <div className="blog-card small-card ">
                     <img
-                      src={blog?.coverImage?.path || "/assets/images/default.png"}
+                      src={
+                        blog?.coverImage?.path || "/assets/images/default.png"
+                      }
                       alt={blog?.title}
-                      className="img-fluid"
+                      className="blog-card-img"
                     />
                     <div className="blog-text">
                       <h5>{blog?.title}</h5>

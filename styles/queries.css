@@ -44,8 +44,55 @@
     justify-content: center;
     gap: 32px;
   }
+
+  .famous-img {
+    margin-bottom: 48px;
+  }
+
+  .services-text {
+    padding-left: 0;
+  }
+
+  .services-text .text-active {
+    padding-left: 15px;
+  }
+
+  .discover-section {
+    padding: 64px 0;
+  }
 }
 
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
+  .footer-bottom .social-icons {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .social-icons a {
+    min-width: Calc(50% - 18px);
+  }
+  .footer-bottom .store-btns {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .footer-bottom-2 .bottom-links {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .cta-btn,
+  .arw-btn {
+    width: 100%;
+  }
+
+  .CommunityCommetBody .aritcleUseImg {
+    width: 64px;
+    height: 64px;
+  }
+
+  .aritcleCommentContent .chatImg {
+    width: 184px;
+    height: 184px;
+  }
 }

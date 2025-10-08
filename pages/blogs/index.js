@@ -1,6 +1,5 @@
 import Head from "next/head";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import { useEffect, useState, useCallback } from "react";
 import authAxios from "@/services/authAxios";
 import common from "@/services/common";
@@ -50,30 +49,38 @@ export default function Blogs() {
 
   const pageHasChanged = (pageNumber) => {
     if (pageNumber !== paginData.activePage) {
-      router.push(`/blogs?page=${pageNumber}${searchString ? `&searchString=${searchString}` : ""}`);
+      router.push(
+        `/blogs?page=${pageNumber}${
+          searchString ? `&searchString=${searchString}` : ""
+        }`
+      );
     }
   };
 
   return (
     <>
-      <section className="page-section">
+      <section className="page-section all-blogs">
         <h1 className="heading-secondary">Blogs</h1>
         <div className="container">
           <div className="row g-4">
             <div className="col-lg-12 d-flex flex-column gap-3">
               {paginData?.list?.length > 0 ? (
                 paginData?.list?.map((blog, index) => (
-                  <Link href={`/blogs/${blog?._id}/${blog?.slug}`} key={index}>
-                    <div className="blog-card  ">
-                      <img
-                        src={blog?.coverImage?.path || "/assets/images/default.png"}
-                        alt={blog?.title}
-                        className="img-fluid"
-                      />
-                      <div className="blog-text">
-                        <h5>{blog?.title}</h5>
-                        <p>{common.truncateAndClean(blog?.content, 100)}</p>
-                      </div>
+                  <Link
+                    href={`/blogs/${blog?._id}/${blog?.slug}`}
+                    key={index}
+                    className="blog-card  "
+                  >
+                    <img
+                      src={
+                        blog?.coverImage?.path || "/assets/images/default.png"
+                      }
+                      alt={blog?.title}
+                      className=" img-fluid"
+                    />
+                    <div className="blog-text">
+                      <h5>{blog?.title}</h5>
+                      <p>{common.truncateAndClean(blog?.content, 100)}</p>
                     </div>
                   </Link>
                 ))

@@ -39,6 +39,11 @@
   color: var(--primary-color);
 }
 
+.react-tel-input .form-control {
+  width: 100% !important;
+  height: auto !important;
+}
+
 /* Hamburger hidden on desktop */
 .mobile-toggle {
   display: none;
@@ -175,6 +180,10 @@
 .cta-btn:hover {
   background-color: var(--primary-color);
   color: white;
+
+  transform: translateY(-4px);
+  box-shadow: rgb(0, 0, 0) 0px 4px, rgba(50, 50, 97, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 5px 5px 5px;
 }
 .image-col {
   z-index: 2;
@@ -539,6 +548,7 @@
   transform: translateY(-4px);
   box-shadow: 0 4px black, 0 6px 12px -2px rgba(50, 50, 97, 0.25),
     0 5px 5px 5px rgba(0, 0, 0, 0.3);
+  color: var(--text-color);
 }
 
 .large-card {
@@ -546,7 +556,8 @@
   flex-direction: column;
 }
 
-.blog-card img {
+.blog-card .blog-card-img,
+.all-blogs .blog-card img {
   border: 3px solid var(--text-color);
   border-radius: 12px;
   width: 180px;
@@ -555,6 +566,11 @@
   object-fit: cover;
   flex-shrink: 0;
   box-shadow: 0 4px var(--text-color);
+}
+
+.blog-card .blog-card-img.img-fluid {
+  width: 100%;
+  height: auto;
 }
 .large-card img {
   width: 100%;
@@ -844,7 +860,8 @@
 }
 
 /* Input Fields */
-.modal-input {
+.modal-input,
+.react-tel-input .modal-input.form-control {
   border-radius: 10px;
   border: 2px solid var(--text-color);
   background: #fff;
@@ -853,6 +870,22 @@
   font-weight: 500;
   color: #8f5432 !important;
   box-shadow: 2px 2px 0px var(--text-color);
+}
+
+.react-tel-input .modal-input.form-control {
+  padding-left: 64px;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: #0000 !important;
+  border: 0 !important;
+  bottom: 0 !important;
+  border-right: 2px solid var(--primary-color) !important;
+  border-radius: 3px 0 0 3px !important;
+  padding: 10px !important;
+}
+.react-tel-input .flag-dropdown.open {
+  background-color: #0000 !important;
 }
 
 .modal-input:focus {
@@ -902,6 +935,12 @@
   height: 60vh;
   justify-content: center;
 }
+
+.blog-detail-page .large-card.blog-card:hover {
+  transform: translateY(0);
+  box-shadow: 0 4px 0px var(--text-color);
+}
+
 .blog-detail-page p {
   font-size: 20px;
   color: var(--text-color);
@@ -1059,6 +1098,15 @@
   font-size: 16px;
 }
 .aritcleCommentContent .communityReplyComtLts .flagDropdown .btn:hover {
+  background-color: #0000;
+}
+.aritcleCommentContent .btn:hover,
+.aritcleCommentContent .btn:focus,
+.aritcleCommentContent .btn-check:checked + .btn,
+.aritcleCommentContent .btn.active,
+.aritcleCommentContent .btn.show,
+.aritcleCommentContent .btn:first-child:active,
+:not(.btn-check) + .btn:active {
   box-shadow: none;
   transform: none;
 }
@@ -1137,4 +1185,40 @@
   .patientWritMsgBx .icon-btn.upload {
     right: 50px;
   }
+}
+
+.text-page-ui .heading-secondary {
+  margin-bottom: 5px;
+}
+.text-page-ui .lead {
+  margin-bottom: 36px;
+}
+.text-page-ui .content-box {
+  text-align: left;
+  margin-bottom: 36px;
+  font-size: 18px;
+}
+.text-page-ui .content-box strong {
+  /* margin-right: 12px; */
+}
+.text-page-ui .content-box h2 {
+  margin-bottom: 24px;
+}
+.text-page-ui .content-box p,
+.text-page-ui .content-box ul {
+  color: #171717;
+}
+
+.text-page-ui ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.text-page-ui a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.text-page-ui a:hover {
+  text-decoration: underline;
 }

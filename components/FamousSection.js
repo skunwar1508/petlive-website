@@ -1,4 +1,8 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 const FamousSection = () => {
+  const router = useRouter();
   return (
     <section className="famous-section bg-paw-img">
       <span className="third-bg"></span>
@@ -19,8 +23,11 @@ const FamousSection = () => {
                 Create a free digital scrapbook to celebrate your pet’s quirks,
                 adventures, and secret talents. No red carpet needed!
               </p>
-              <button className="btn arw-btn">
-                Start Creating <span class="arrow">→</span>
+              <button
+                className="btn arw-btn"
+                onClick={() => router.push("/question-form")}
+              >
+                Start Creating <span className="arrow">→</span>
               </button>
             </div>
           </div>

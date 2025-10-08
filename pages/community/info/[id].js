@@ -29,7 +29,8 @@ export default function CommunityInfo() {
   }, [communityId]);
 
   const JoinedCommunity = () => {
-    authAxios.get(`/community/member/join/${communityId}`)
+    authAxios
+      .get(`/community/member/join/${communityId}`)
       .then((response) => {
         fetchCommunityDetails();
         common.success("You have successfully joined the community.");
@@ -47,26 +48,46 @@ export default function CommunityInfo() {
           <h1 className="heading-primary">Community Name</h1>
           <div className="row mb-5">
             <div className="col-lg-12 ">
-              <div href="/blog" className="blog-card large-card ">
+              <Link href="/blog" className="blog-card large-card ">
                 <img
-                  src={communityDetails?.image?.path || "/assets/images/default.jpg"}
+                  src={
+                    communityDetails?.image?.path ||
+                    "/assets/images/default.jpg"
+                  }
                   alt={communityDetails?.name}
-                  className="img-fluid"
+                  className=" img-fluid"
                 />
-              </div>
+              </Link>
             </div>
           </div>
           <div className="d-flex justify-content-between mb-5">
             <p>Active Members : {communityDetails?.members?.length || 0}</p>
-            <p>Created Date : <DateFormate date={communityDetails?.createdAt} formate={"DD MMMM YYYY"} /></p>
+            <p>
+              Created Date :{" "}
+              <DateFormate
+                date={communityDetails?.createdAt}
+                formate={"DD MMMM YYYY"}
+              />
+            </p>
           </div>
-          <div className="mb-5" dangerouslySetInnerHTML={{ __html: communityDetails?.description }} ></div>
+          <div
+            className="mb-5"
+            dangerouslySetInnerHTML={{ __html: communityDetails?.description }}
+          ></div>
 
           <div className="text-center">
             {communityDetails?.isMember ? (
-              <Link href={`/community/view/${communityId}`} className="cta-btn">View Community</Link>
+              <Link href={`/community/view/${communityId}`} className="cta-btn">
+                View Community
+              </Link>
             ) : (
-              <button type="button" className="cta-btn" onClick={() => JoinedCommunity()}>Join Community</button>
+              <button
+                type="button"
+                className="cta-btn"
+                onClick={() => JoinedCommunity()}
+              >
+                Join Community
+              </button>
             )}
           </div>
         </div>

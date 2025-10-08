@@ -48,8 +48,12 @@ const Footer = () => {
 
           {/* App Store Buttons */}
           <div className="store-btns">
-            <img src="/images/f-apple.svg" alt="App Store" />
-            <img src="/images/f-android.svg" alt="Google Play" />
+            <Link href="#">
+              <img src="/images/f-apple.svg" alt="App Store" />
+            </Link>
+            <Link href="#">
+              <img src="/images/f-android.svg" alt="Google Play" />
+            </Link>
           </div>
         </div>
 
@@ -57,10 +61,10 @@ const Footer = () => {
         <div className="footer-bottom-2 ">
           {/* Social Icons */}
           <div className="bottom-links">
-            <Link href="#">About Us</Link>
-            <Link href="#">Privacy Policy</Link>
-            <Link href="#">Terms and Conditions</Link>
-            <Link href="#">Contact Us</Link>
+            <Link href="/about-us">About Us</Link>
+            <Link href="/privacy-policy">Privacy Policy</Link>
+            <Link href="/terms-and-conditions">Terms and Conditions</Link>
+            <Link href="/contact-us">Contact Us</Link>
           </div>
         </div>
       </div>

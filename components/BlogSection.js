@@ -44,7 +44,7 @@ const BlogSection = () => {
                         blog?.coverImage?.path || "/assets/images/default.png"
                       }
                       alt={blog?.title}
-                      className="img-fluid"
+                      className="blog-card-img img-fluid"
                     />
                     <div className="blog-text">
                       <h5>{blog?.title}</h5>

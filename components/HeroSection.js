@@ -1,4 +1,8 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <section className="hero-section">
       <div className="container">
@@ -15,8 +19,18 @@ export default function HeroSection() {
                 <br /> and even find your pet’s perfect playdate.
               </p>
               <div className="d-flex flex-wrap gap-3">
-                <button className="btn cta-btn">Explore Our Community</button>
-                <button className="btn cta-btn">Read Our Blog</button>
+                <button
+                  className="btn cta-btn"
+                  onClick={() => router.push("/community ")}
+                >
+                  Explore Our Community
+                </button>
+                <button
+                  className="btn cta-btn"
+                  onClick={() => router.push("/blogs")}
+                >
+                  Read Our Blog
+                </button>
               </div>
             </div>
           </div>

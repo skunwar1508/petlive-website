@@ -4,8 +4,8 @@ import { Formik, Form as FormikForm } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+// import PhoneInput from "react-phone-input-2";
+// import "react-phone-input-2/lib/style.css";
 
 /**
  * If you have an authAxios service, replace `axiosInstance` with your import:
@@ -162,7 +162,16 @@ const ContactUs = () => {
 
                     {/* Phone */}
                     <div className=" phone-code-bar mb-3">
-                      <PhoneInput
+                      <input
+                        type="text"
+                        name="mobile"
+                        placeholder="Mobile Number"
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className="modal-input form-control"
+                      />
+                      {/* <PhoneInput
                         country={"in"}
                         value={values.countryCode + values.phoneNumber}
                         countryCodeEditable={false}
@@ -188,12 +197,12 @@ const ContactUs = () => {
                           className: "modal-input form-control",
                         }}
                         inputClass="w-100"
-                      />
+                      /> */}
                       {touched.phoneNumber && errors.phoneNumber && (
                         <div className="errorMsg">{errors.phoneNumber}</div>
                       )}
                       {/* Hidden fields to keep Formik state in sync (optional) */}
-                      <input
+                      {/* <input
                         type="hidden"
                         name="countryCode"
                         value={values.countryCode}
@@ -202,7 +211,7 @@ const ContactUs = () => {
                         type="hidden"
                         name="phoneNumber"
                         value={values.phoneNumber}
-                      />
+                      /> */}
                     </div>
 
                     {/* Message */}

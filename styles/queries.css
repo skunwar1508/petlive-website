@@ -12,8 +12,31 @@
 
 /* Small devices (landscape phones, less than 768px) */
 @media (max-width: 767.98px) {
+  :root {
+    --section-padding: 48px 0;
+    --first-heading: 48px;
+    --second-heading: 36px;
+    --third-heading: 28px;
+    --forth-heading: 20px;
+    --fifth-heading: 18px;
+    --sixth-heading: 16px;
+    --para-text: 14px;
+    --small-text: 12px;
+    --font-margin-3: 24px;
+    --font-margin-6: 48px;
+    --font-margin-7: 64px;
+    --common-box-padding: 12px 18px;
+
+    /* var(--text-light-color); */
+  }
+
   .hero-section .row {
     flex-direction: column-reverse;
+  }
+
+  .logo {
+    width: 136px;
+    height: auto;
   }
   .hero-section .text-col {
     padding: 0 15px;
@@ -32,21 +55,34 @@
     margin-right: -10px;
   }
   .blob-wrapper {
-    margin-bottom: 24px;
+    width: 70%;
+    margin: 0 auto 24px;
   }
 
-  .heading-primary {
-    font-size: 48px;
+  .heading-primary,
+  .text-col p,
+  .services-text .block .heading-secondary,
+  .services-text .block p,
+  .blog-text,
+  .famous-text {
+    text-align: center;
+  }
+
+  .services-section {
+    margin-bottom: var(--font-margin-3);
+  }
+  .hero-section .btns-container {
+    flex-wrap: wrap;
   }
 
   .blog-card {
     flex-direction: column;
     justify-content: center;
-    gap: 32px;
   }
 
   .famous-img {
-    margin-bottom: 48px;
+    margin-bottom: var(--font-margin-6);
+    width: 80%;
   }
 
   .services-text {
@@ -60,25 +96,58 @@
   .discover-section {
     padding: 64px 0;
   }
+
+  .desktop-links {
+    display: none;
+  }
+  .mobile-toggle {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-sidebar {
+    display: none;
+  }
 }
 
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
+  :root {
+    --section-padding: 36px 0;
+    --first-heading: 36px;
+    --second-heading: 32px;
+    --third-heading: 24px;
+    --forth-heading: 18px;
+    --fifth-heading: 16px;
+    --sixth-heading: 15px;
+    --para-text: 14px;
+    --small-text: 12px;
+    --font-margin-3: 20px;
+    --font-margin-6: 36px;
+    --font-margin-7: 48px;
+    --common-box-padding: 8px 16px;
+
+    /* var(--text-light-color); */
+  }
   .footer-bottom .social-icons {
     flex-wrap: wrap;
-    width: 100%;
   }
-  .social-icons a {
-    min-width: Calc(50% - 18px);
+  .footer-section .footer-logo {
+    width: 164px;
+  }
+
+  .social-icons a,
+  .footer-bottom .store-btns img {
+    width: 56px;
+    height: 56px;
   }
   .footer-bottom .store-btns {
-    width: 100%;
-    justify-content: space-around;
   }
 
   .footer-bottom-2 .bottom-links {
-    flex-direction: column;
-    gap: 24px;
+    flex-wrap: wrap;
+    gap: 18px;
   }
 
   .cta-btn,
@@ -94,5 +163,15 @@
   .aritcleCommentContent .chatImg {
     width: 184px;
     height: 184px;
+  }
+}
+
+/* Optional: tighten on very small screens */
+@media (max-width: 380px) {
+  .patientWritMsgBx .msg-input {
+    padding-right: 92px;
+  }
+  .patientWritMsgBx .icon-btn.upload {
+    right: 50px;
   }
 }

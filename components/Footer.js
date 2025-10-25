@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="row">
           {/* Logo + Description */}
           <div className="col-lg-12 mb-4 mb-lg-0">
-            <div className="footer-logo w-100 mb-3 d-flex align-items-center justify-content-center gap-2">
+            <div className="footer-logo">
               <img
                 src="/images/furr-baby-footer-logo.svg"
                 className="footer-logo"
@@ -62,9 +62,9 @@ const Footer = () => {
           {/* Social Icons */}
           <div className="bottom-links">
             <Link href="/about-us">About Us</Link>
+            <Link href="/contact-us">Contact Us</Link>
             <Link href="/privacy-policy">Privacy Policy</Link>
             <Link href="/terms-and-conditions">Terms and Conditions</Link>
-            <Link href="/contact-us">Contact Us</Link>
           </div>
         </div>
       </div>

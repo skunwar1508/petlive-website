@@ -18,7 +18,7 @@ export default function HeroSection() {
                 <br /> join pet lover communities,
                 <br /> and even find your pet’s perfect playdate.
               </p>
-              <div className="d-flex flex-wrap gap-3">
+              <div className="btns-container">
                 <button
                   className="btn cta-btn"
                   onClick={() => router.push("/community ")}

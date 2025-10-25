@@ -94,16 +94,13 @@ const CommunityCommentChatCard = ({ data, hideComment }) => {
         {isAnonymouse ? (
           <img
             className="img-fluid"
-            src="/assets/images/default_user.jpg"
+            src="/images/user.png"
             alt="Anonymous User"
           />
         ) : (
           <img
             className="img-fluid"
-            src={
-              authorDetails?.profileImage?.path ||
-              "/assets/images/default_user.jpg"
-            }
+            src={authorDetails?.profileImage?.path || "/images/user.png"}
             alt={authorDetails?.profileImage?.path || "Patient Image"}
           />
         )}
@@ -118,17 +115,19 @@ const CommunityCommentChatCard = ({ data, hideComment }) => {
                 Dr. {authorDetails?.firstName + " " + authorDetails?.lastName}
               </h4>
             )}
-            {authorRole === "patient" && <h4>{authorDetails?.fullName}</h4>}
+            {authorRole === "patient" && (
+              <h4>{authorDetails?.fullName || "Patient Name"} </h4>
+            )}
             {authorRole === "admin" && <h4>Admin</h4>}
           </Fragment>
         )}
 
         <p>{content}</p>
         {image?.path && (
-          <div className="chatImg mb-2">
+          <div className="chatImg">
             <img
               className="img-fluid"
-              src={image?.path || "/assets/images/default_img.jpg"}
+              src={image?.path || "/images/user.png"}
               alt={image?.path || "Patient Image"}
             />
           </div>
@@ -137,7 +136,7 @@ const CommunityCommentChatCard = ({ data, hideComment }) => {
           {isMyPost && (
             <li>
               <span>
-                Like 1
+                <img src="/images/eye-icon.svg" alt="messages" />
                 {/* <svg
                   width="17"
                   height="13"

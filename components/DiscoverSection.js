@@ -33,7 +33,7 @@ const DiscoverSection = () => {
         <div className="row g-4">
           {/* Right side - small blogs */}
           {blogs.slice(0).map((blog, index) => (
-            <div key={index} className="col-lg-4 d-flex flex-column gap-3">
+            <div key={index} className="col-lg-4 d-flex flex-column">
               <div className="blog-card  ">
                 <img
                   src={blog.img}

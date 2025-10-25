@@ -26,16 +26,18 @@ const CommunityView = () => {
     <>
       <section className="page-section community-chat-page">
         <div className="container">
-          <h1 className="heading-secondary">
-            {communityDetails?.name} ({communityDetails?.members?.length || 0}{" "}
-            members)
-          </h1>
-          <div className="row g-4">
-            <div className="col-lg-12">
-              {communityDetails?.isMember && (
-                <CommunityCommentList id={communityId} />
-              )}
-            </div>
+          <div className="communityChatBody">
+            {/* <h1 className="heading-secondary">
+              {communityDetails?.name} ({communityDetails?.members?.length || 0}{" "}
+              members)
+            </h1> */}
+
+            {communityDetails?.isMember && (
+              <CommunityCommentList
+                id={communityId}
+                communityDetails={communityDetails}
+              />
+            )}
           </div>
         </div>
       </section>

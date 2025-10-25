@@ -5,7 +5,7 @@ import ImageFormik from "../common/fileUpload";
 import { useAppContext } from "@/context/context";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
-const CommunitypostList = ({ id }) => {
+const CommunitypostList = ({ id, communityDetails }) => {
   const { user } = useAppContext();
   const [posts, setPosts] = useState([]);
   const [newpost, setNewPost] = useState("");
@@ -235,12 +235,16 @@ const CommunitypostList = ({ id }) => {
   };
 
   return (
-    <div className="communityChatBody">
+    <>
       <div
         className="communitChatListBody"
         ref={scrollableDivRef}
         onScroll={handleScroll}
       >
+        <h1 className="heading-secondary">
+          {communityDetails?.name} ({communityDetails?.members?.length || 0}{" "}
+          members)
+        </h1>
         {posts.map((post) => (
           <CommunitypostChatCard
             key={post?._id}
@@ -283,7 +287,6 @@ const CommunitypostList = ({ id }) => {
                     <Icon icon="material-symbols:send-outline" />
                 </button>
             </form> */}
-
       <form className="patientWritMsgBx" onSubmit={handleSubmit}>
         <div className="msgBox">
           <input
@@ -328,7 +331,7 @@ const CommunitypostList = ({ id }) => {
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 

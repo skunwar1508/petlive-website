@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import LoginModal from "./modal/LoginModal";
 import RegisterModal from "./modal/RegisterModal";
 import VerifyModal from "./modal/VerifyModal";
@@ -11,6 +12,8 @@ const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const { user, logout, isLoggedIn } = useAppContext();
+
+  const pathname = usePathname(); // watch route changes
 
   const navLinks = [
     { name: "Login", href: "#" },
@@ -32,7 +35,13 @@ const Header = () => {
     return () => (document.body.style.overflow = "");
   }, [open]);
 
-  // Handle click on nav link
+  // Close mobile menu when route changes (works with App Router)
+  useEffect(() => {
+    // close only if it was open (avoid unnecessary state updates)
+    if (open) setOpen(false);
+  }, [pathname]);
+
+  // Handle click on nav link (for Login/Register)
   const handleNavClick = (link) => {
     if (link.name === "Login") {
       setShowLogin(true);
@@ -43,12 +52,18 @@ const Header = () => {
     setOpen(false);
   };
 
+  // helper for normal navigation links to also close mobile menu
+  const handleNavigateAndClose = (e, href) => {
+    // allow Link to do its job — just close menu
+    setOpen(false);
+  };
+
   return (
     <header className="site-header">
       <div className="container">
         <div className="header-bar">
           {/* Logo */}
-          <Link href="/" className="logo-link">
+          <Link href="/" className="logo-link" onClick={() => setOpen(false)}>
             <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
           </Link>
 
@@ -62,12 +77,20 @@ const Header = () => {
                   </div>
                 </li>
                 <li>
-                  <Link href="/community" className="nav-link">
+                  <Link
+                    href="/community"
+                    className="nav-link"
+                    onClick={(e) => handleNavigateAndClose(e, "/community")}
+                  >
                     Community
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blogs" className="nav-link">
+                  <Link
+                    href="/blogs"
+                    className="nav-link"
+                    onClick={(e) => handleNavigateAndClose(e, "/blogs")}
+                  >
                     Blogs
                   </Link>
                 </li>
@@ -105,8 +128,8 @@ const Header = () => {
           {/* Hamburger for Mobile */}
           <button
             className="mobile-toggle mobile-open"
-            aria-expanded={"open"}
-            aria-label={"Open menu"}
+            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen(true)}
           >
             ☰
@@ -119,13 +142,16 @@ const Header = () => {
             {/* Close button */}
             <button
               className="mobile-toggle mobile-close"
-              aria-expanded={"close"}
+              aria-expanded={!open}
               aria-label={"Close menu"}
               onClick={() => setOpen(false)}
             >
               ✕
             </button>
-            <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
+            <Link href="/" onClick={() => setOpen(false)}>
+              <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
+            </Link>
+
             <ul className="nav-links">
               {isLoggedIn ? (
                 <>
@@ -135,12 +161,20 @@ const Header = () => {
                     </div>
                   </li>
                   <li>
-                    <Link href="/community" className="nav-link">
+                    <Link
+                      href="/community"
+                      className="nav-link"
+                      onClick={() => setOpen(false)}
+                    >
                       Community
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blogs" className="nav-link">
+                    <Link
+                      href="/blogs"
+                      className="nav-link"
+                      onClick={() => setOpen(false)}
+                    >
                       Blogs
                     </Link>
                   </li>

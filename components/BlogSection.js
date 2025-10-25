@@ -23,7 +23,7 @@ const BlogSection = () => {
     <section className="blog-section">
       <div className="container">
         <h2 className="heading-secondary">Blogs</h2>
-        <div className="row g-4">
+        <div className="row gap-4">
           {/* Left side - big blog */}
 
           {blogs.length > 0 ? (

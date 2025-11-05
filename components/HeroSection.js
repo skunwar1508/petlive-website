@@ -1,8 +1,18 @@
 "use client";
+import { useAppContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
   const router = useRouter();
+    const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister } = useAppContext();
+
+    const handleNavigation = (path) => {
+      if (isLoggedIn) {
+        router.push(path);
+      } else {
+        setShowLogin(true);
+      }
+    };
   return (
     <section className="hero-section">
       <div className="container">
@@ -21,13 +31,13 @@ export default function HeroSection() {
               <div className="btns-container">
                 <button
                   className="btn cta-btn"
-                  onClick={() => router.push("/community ")}
+                  onClick={() => handleNavigation("/community")}
                 >
                   Explore Our Community
                 </button>
                 <button
                   className="btn cta-btn"
-                  onClick={() => router.push("/blogs")}
+                  onClick={() => handleNavigation("/blogs")}
                 >
                   Read Our Blog
                 </button>

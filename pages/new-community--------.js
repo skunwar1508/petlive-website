@@ -1,50 +1,52 @@
 import Head from "next/head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import common from "@/services/common";
+import Link from "next/link";
 
 export default function NewCommunity() {
-  const blogs = [
-    {
-      img: "/images/blog-dog.jpg",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur.  ",
-    },
-    {
-      img: "/images/blog-dog-2.png",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae uta at faucibus sollicitudin enim.",
-    },
-    {
-      img: "/images/blog-cat.jpg",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur.  ",
-    },
-    {
-      img: "/images/blog-dog-3.jpg",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae uta at faucibus sollicitudin enim.",
-    },
-    {
-      img: "/images/blog-dog.jpg",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae uta at faucibus sollicitudin enim.Lorem ipsum dolor sit amet consectetur. ",
-    },
-    {
-      img: "/images/blog-dog-2.png",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae uta at faucibus sollicitudin enim.",
-    },
-    {
-      img: "/images/blog-cat.jpg",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae uta at faucibus sollicitudin enim.Lorem ipsum dolor sit amet consectetur. ",
-    },
-    {
-      img: "/images/blog-dog-3.jpg",
-      title: "Blog Heading",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eros vitae uta at faucibus sollicitudin enim.",
-    },
-  ];
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page")) || 1;
+  const searchString = searchParams.get("searchString") || "";
+
+  const [paginData, setPaginData] = useState({
+    list: [],
+    activePage: page,
+    itemsCountPerPage: 3,
+    totalItemsCount: 0,
+  });
+
+  const getData = useCallback(async () => {
+    common.loader(true);
+    try {
+      const res = await authAxios({
+        method: "POST",
+        url: `/community/paginate`,
+        data: {
+          page,
+          perPage: 3,
+          searchString: searchString,
+        },
+      });
+      setPaginData((prev) => ({
+        ...prev,
+        list: res?.data?.data || [],
+        activePage: page,
+        totalItemsCount: res?.data?.totalCount || 0,
+      }));
+    } catch (error) {
+      common.error(error);
+    }
+    common.loader(false);
+  }, [page, searchString]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <>
@@ -59,20 +61,25 @@ export default function NewCommunity() {
           <div className="container">
             <div className="row g-4">
               {/* Right side - small blogs */}
-              {blogs.slice(1).map((blog, index) => (
+              {paginData?.list?.map((d, index) => (
                 <div key={index} className="col-lg-4 d-flex flex-column gap-3">
-                  <div className="blog-card  ">
-                    <img
-                      src={blog.img}
-                      alt={blog.title}
-                      className="img-fluid"
-                    />
-                    <div className="blog-text">
-                      <h5>{blog.title}</h5>
-                      <p>{blog.desc}</p>
-                      <button className="cta-btn">Join Community</button>
+                  <Link
+                    href={`/community/info/${d?._id}`}
+                    className="blog-card  "
+                  >
+                    <div className="blog-card  ">
+                      <img
+                        src={d?.image?.path || "/assets/images/default.png"}
+                        alt={d?.name}
+                        className="img-fluid"
+                      />
+                      <div className="blog-text">
+                        <h5>{d?.name}</h5>
+                        <p>{common.truncateAndClean(d?.description, 150)}</p>
+                        <button className="cta-btn">Join Community</button>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>

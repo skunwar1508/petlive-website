@@ -1,23 +1,54 @@
+import Head from "next/head";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import common from "@/services/common";
 import Link from "next/link";
+import authAxios from "@/services/authAxios";
 
 const DiscoverSection = () => {
-  const blogs = [
-    {
-      img: "/images/blog-dog-3.jpg",
-      title: "Community Name",
-      link: "Join Name",
-    },
-    {
-      img: "/images/blog-dog-3.jpg",
-      title: "Community Name",
-      link: "Join Name",
-    },
-    {
-      img: "/images/blog-dog-3.jpg",
-      title: "Community Name",
-      link: "Join Name",
-    },
-  ];
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page")) || 1;
+  const searchString = searchParams.get("searchString") || "";
+
+  const [paginData, setPaginData] = useState({
+    list: [],
+    activePage: page,
+    itemsCountPerPage: 3,
+    totalItemsCount: 0,
+  });
+
+  const getData = useCallback(async () => {
+    common.loader(true);
+    try {
+      const res = await authAxios({
+        method: "POST",
+        url: `/community/paginate`,
+        data: {
+          page,
+          perPage: 3,
+          searchString: searchString,
+        },
+      });
+      setPaginData((prev) => ({
+        ...prev,
+        list: res?.data?.data || [],
+        activePage: page,
+        totalItemsCount: res?.data?.totalCount || 0,
+      }));
+    } catch (error) {
+      console.log(error)
+      common.error(error);
+    }
+    common.loader(false);
+  }, [page, searchString]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <section className="page-section bg-paw-img bg-paw-img-dark community-page discover-section">
@@ -32,22 +63,24 @@ const DiscoverSection = () => {
         </h6>
         <div className="row g-4">
           {/* Right side - small blogs */}
-          {blogs.slice(0).map((blog, index) => (
+          {paginData?.list?.map((d, index) => (
             <div key={index} className="col-lg-4 d-flex flex-column">
-              <div className="blog-card  ">
-                <img
-                  src={blog.img}
-                  alt={blog.title}
-                  className="blog-card-img img-fluid"
-                />
-                <div className="blog-text">
-                  <h5>{blog.title}</h5>
-                  <Link className="arw-link" href="/community">
-                    {blog.link}
-                    <span className="arrow">→</span>
-                  </Link>
+              <Link className="d-block" href={`/community/info/${d?._id}`}>
+                <div className="blog-card  ">
+                  <img
+                    src={d?.image?.path || "/assets/images/default.png"}
+                    alt={d?.name}
+                    className="blog-card-img img-fluid"
+                  />
+                  <div className="blog-text">
+                    <h5>{d?.name}</h5>
+                    <div className="arw-link text-center">
+                      Join Community
+                      <span className="arrow">→</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>

@@ -23,7 +23,7 @@ const BlogSection = () => {
     <section className="blog-section">
       <div className="container">
         <h2 className="heading-secondary">Blogs</h2>
-        <div className="row gap-4">
+        <div className="row">
           {/* Left side - big blog */}
 
           {blogs.length > 0 ? (
@@ -31,7 +31,7 @@ const BlogSection = () => {
               {blogs?.map((blog, index) => (
                 <div
                   className={`col-lg-6 ${
-                    index === 0 ? "" : "d-flex flex-column gap-3"
+                    index === 0 ? "" : ""
                   }`}
                   key={index}
                 >

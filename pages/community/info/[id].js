@@ -45,7 +45,7 @@ export default function CommunityInfo() {
     <>
       <section className="page-section blog-detail-page">
         <div className="container">
-          <h1 className="heading-primary">Community Name</h1>
+          <h1 className="heading-primary">{communityDetails?.name}</h1>
           <div className="row mb-5">
             <div className="col-lg-12 ">
               <Link href="/blog" className="blog-card large-card ">

@@ -9,6 +9,8 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
     const router = useRouter();
 
     const login = (user) => {
@@ -23,7 +25,7 @@ export const AppProvider = ({ children }) => {
     };
     const getProfile = async () => {
         try {
-            const {data} = await authAxios.get('/patient/profile');
+            const { data } = await authAxios.get('/patient/profile');
             setUser(data?.data);
         } catch (error) {
             console.error('Error fetching profile', error);
@@ -47,7 +49,7 @@ export const AppProvider = ({ children }) => {
     }, []);
 
     return (
-        <AppContext.Provider value={{ user, isLoggedIn, login, logout }}>
+        <AppContext.Provider value={{ user, isLoggedIn, login, logout, showLogin, setShowLogin, showRegister, setShowRegister }}>
             {children}
         </AppContext.Provider>
     );

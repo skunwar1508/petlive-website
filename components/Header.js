@@ -9,9 +9,7 @@ import { useAppContext } from "@/context/context";
 
 const Header = () => {
   const [open, setOpen] = useState(false); // mobile menu
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
-  const { user, logout, isLoggedIn } = useAppContext();
+  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister } = useAppContext();
 
   const pathname = usePathname(); // watch route changes
 
@@ -180,7 +178,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      href="#"
+                      href="/"
                       onClick={() => {
                         logout();
                         setOpen(false);

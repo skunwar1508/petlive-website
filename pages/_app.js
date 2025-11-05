@@ -1,7 +1,7 @@
-import "@/styles/bootstrap.min.css";
 import "@/styles/globals.css";
 import "@/styles/styles.css";
 import "@/styles/queries.css";
+import "@/styles/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
 import { AppProvider } from "@/context/context";
 import Layout from "@/layout/layout.index";

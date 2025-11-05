@@ -7,6 +7,8 @@ import { AppProvider } from "@/context/context";
 import Layout from "@/layout/layout.index";
 import Head from "next/head";
 
+
+
 export default function App({ Component, pageProps }) {
   return (
     <>

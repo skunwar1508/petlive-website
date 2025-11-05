@@ -7,13 +7,21 @@ import { useCallback, useEffect, useState } from "react";
 import common from "@/services/common";
 import Link from "next/link";
 import authAxios from "@/services/authAxios";
+import { useAppContext } from "@/context/context";
 
 const DiscoverSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page")) || 1;
   const searchString = searchParams.get("searchString") || "";
-
+  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister } = useAppContext();
+  const handleNavigation = (path) => {
+    if (isLoggedIn) {
+      router.push(path);
+    } else {
+      setShowLogin(true);
+    }
+  };
   const [paginData, setPaginData] = useState({
     list: [],
     activePage: page,
@@ -26,7 +34,7 @@ const DiscoverSection = () => {
     try {
       const res = await authAxios({
         method: "POST",
-        url: `/community/paginate`,
+        url: `/community/public/paginate`,
         data: {
           page,
           perPage: 3,
@@ -65,7 +73,7 @@ const DiscoverSection = () => {
           {/* Right side - small blogs */}
           {paginData?.list?.map((d, index) => (
             <div key={index} className="col-lg-4 d-flex flex-column">
-              <Link className="d-block" href={`/community/info/${d?._id}`}>
+              <a className="d-block" onClick={() => handleNavigation(`/community/info/${d?._id}`)}>
                 <div className="blog-card  ">
                   <img
                     src={d?.image?.path || "/assets/images/default.png"}
@@ -80,7 +88,7 @@ const DiscoverSection = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </a>
             </div>
           ))}
         </div>

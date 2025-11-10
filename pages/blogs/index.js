@@ -6,6 +6,7 @@ import common from "@/services/common";
 import PageModule from "@/components/pagination/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import UnauthAxios from "@/services/unauthAxios";
 
 export default function Blogs() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Blogs() {
   const getData = useCallback(async () => {
     common.loader(true);
     try {
-      const res = await authAxios({
+      const res = await UnauthAxios({
         method: "POST",
         url: `/blog/paginate`,
         data: {

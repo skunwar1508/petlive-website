@@ -37,7 +37,7 @@ export default function HeroSection() {
                 </button>
                 <button
                   className="btn cta-btn"
-                  onClick={() => handleNavigation("/blogs")}
+                  onClick={() => router.push("/blogs")}
                 >
                   Read Our Blog
                 </button>

@@ -1417,3 +1417,7 @@ main {
 .text-page-ui a:hover {
   text-decoration: underline;
 }
+
+.login-modal .modal-body {
+    padding: 30px 40px;
+}

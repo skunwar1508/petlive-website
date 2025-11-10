@@ -70,16 +70,16 @@ const LoginModal = ({ show, onHide }) => {
     }
   };
   return (
-    <Modal show={show} onHide={onHide} centered contentClassName="form-modal">
+    <Modal show={show} onHide={onHide} centered contentClassName="form-modal login-modal">
       <Modal.Body>
         {/* Logo */}
-        <div className="text-center mb-3">
+        {/* <div className="text-center mb-3">
           <img
             src="/furr_baby_logo.svg"
             alt="Furr Baby"
             className="modal-logo"
           />
-        </div>
+        </div> */}
 
         {/* Title */}
         <h3 className="text-center modal-title">Login</h3>

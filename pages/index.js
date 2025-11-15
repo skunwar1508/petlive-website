@@ -11,6 +11,8 @@ import ServicesSection from "@/components/ServicesSection";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 import DiscoverSection from "@/components/DiscoverSection";
+import ROOT_URL from "@/services/api-url";
+import { communityPaging, fetchTopFeaturedBlogs } from "@/utils/serverApi";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -26,15 +28,28 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export default function Home() {
+export default function Home({ discoverData, blogData }) {
   return (
     <>
       <HeroSection />
       <ServicesSection />
-      <DiscoverSection />
+      <DiscoverSection discoverData={discoverData} />
       {/* <TrustBadges /> */}
-      <BlogSection />
+      <BlogSection blogData={blogData} />
       <FamousSection />
     </>
   );
+}
+
+
+export async function getServerSideProps(context) {
+  const {data} = await communityPaging(context);
+  const {data: blogData} = await fetchTopFeaturedBlogs();
+
+  return {
+    props: {
+      discoverData: data,
+      blogData: blogData,
+    }
+  }
 }

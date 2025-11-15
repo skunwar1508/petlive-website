@@ -63,7 +63,7 @@ const ServicesSection = () => {
                     activeIndex === i ? "text-active" : "text-inactive"
                   }`}
                 >
-                  <h3 className="heading-secondary">{item.title}</h3>
+                  <h3 className="heading-third">{item.title}</h3>
                   <p>{item.desc}</p>
                 </div>
               ))}

@@ -3,34 +3,20 @@ import common from "@/services/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const BlogSection = () => {
-  const [blogs, setBlogs] = useState([]);
-
-  // Fetch blogs from an API or use static data
-  const fetchBlogs = async () => {
-    try {
-      const response = await authAxios.get("/blog/top-featured");
-      setBlogs(response?.data?.data || []);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-    }
-  };
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
+const BlogSection = ({ blogData }) => {
 
   return (
     <section className="blog-section">
       <div className="container">
         <h2 className="heading-secondary">Blogs</h2>
-        <div className="row">
+        <div className="row justify-content-center">
           {/* Left side - big blog */}
 
-          {blogs.length > 0 ? (
+          {blogData?.length > 0 ? (
             <>
-              {blogs?.map((blog, index) => (
+              {blogData?.map((blog, index) => (
                 <div
-                  className={`col-lg-6 ${
+                  className={`col-lg-4 ${
                     index === 0 ? "" : ""
                   }`}
                   key={index}

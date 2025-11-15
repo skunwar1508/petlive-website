@@ -56,6 +56,88 @@ const Header = () => {
     setOpen(false);
   };
 
+  // single config array, then derive menuItems from it
+  const menuConfig = [
+
+    // auth-only
+    { name: "Community", href: "/community" },
+    { name: "Blogs", href: "/blogs" },
+    { name: "Profile", href: "/profile", show: "auth" },
+    // guest-only
+    { name: "Login", href: "#", show: "guest", actionKey: "login" },
+    { name: "Register", href: "#", show: "guest", actionKey: "register" },
+
+    // logout action for authenticated users
+    { name: "Logout", href: "#", show: "auth", actionKey: "logout" },
+  ];
+
+  // map action keys to actual functions that use context setters
+  const actionHandlers = {
+    login: () => setShowLogin(true),
+    register: () => setShowRegister(true),
+    logout: () => logout(),
+  };
+
+  // derive visible menu items based on auth and role
+  const menuItems = menuConfig
+    .filter((item) => {
+      if (item.show === "guest") return !isLoggedIn;
+      if (item.show === "auth") return isLoggedIn;
+      return true;
+    })
+    .filter((item) => {
+      // if roles are specified, ensure user has one of them
+      if (item.roles && item.roles.length > 0) {
+        return !!user && item.roles.includes(user?.role);
+      }
+      return true;
+    })
+    .map((item) => ({
+      ...item,
+      // attach real action function if actionKey present
+      action: item.actionKey ? actionHandlers[item.actionKey] : undefined,
+    }));
+
+  // helper renderer for menu items (desktop & mobile share logic)
+  const renderMenuItem = (item, isMobile = false) => {
+    const key = item.name;
+    // action-driven items (modals, logout)
+    if (item.action) {
+      return (
+        <li key={key}>
+          <Link
+            href="#"
+            className="nav-link"
+            onClick={(e) => {
+              e.preventDefault();
+              item.action();
+              setOpen(false);
+            }}
+          >
+            {item.name}
+          </Link>
+        </li>
+      );
+    }
+
+    // normal navigation links
+    return (
+      <li key={key}>
+        <Link
+          href={item.href}
+          className="nav-link"
+          onClick={(e) => {
+            // desktop uses handler that just closes menu, mobile also closes
+            handleNavigateAndClose(e, item.href);
+            if (isMobile) setOpen(false);
+          }}
+        >
+          {item.name}
+        </Link>
+      </li>
+    );
+  };
+
   return (
     <header className="site-header">
       <div className="container">
@@ -67,60 +149,15 @@ const Header = () => {
 
           {/* Desktop Links */}
           <ul className="desktop-links">
-            {isLoggedIn ? (
-              <>
-                <li>
-                  <div className="user-info">
-                    <span>Welcome, {user?.name}</span>
-                  </div>
-                </li>
-                <li>
-                  <Link
-                    href="/community"
-                    className="nav-link"
-                    onClick={(e) => handleNavigateAndClose(e, "/community")}
-                  >
-                    Community
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/blogs"
-                    className="nav-link"
-                    onClick={(e) => handleNavigateAndClose(e, "/blogs")}
-                  >
-                    Blogs
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    onClick={() => {
-                      logout();
-                      setOpen(false);
-                    }}
-                    className="nav-link"
-                  >
-                    Logout
-                  </Link>
-                </li>
-              </>
-            ) : (
-              navLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href="#"
-                    className="nav-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(link);
-                    }}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))
+            {isLoggedIn && (
+              <li className="user-welcome">
+                <div className="user-info">
+                  <span>Welcome, {user?.name}</span>
+                </div>
+              </li>
             )}
+
+            {menuItems.map((item) => renderMenuItem(item, false))}
           </ul>
 
           {/* Hamburger for Mobile */}
@@ -151,60 +188,46 @@ const Header = () => {
             </Link>
 
             <ul className="nav-links">
-              {isLoggedIn ? (
-                <>
-                  <li>
-                    <div className="user-info">
-                      <span>Welcome, {user?.name}</span>
-                    </div>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community"
-                      className="nav-link"
-                      onClick={() => setOpen(false)}
-                    >
-                      Community
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/blogs"
-                      className="nav-link"
-                      onClick={() => setOpen(false)}
-                    >
-                      Blogs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      onClick={() => {
-                        logout();
-                        setOpen(false);
-                      }}
-                      className="nav-link"
-                    >
-                      Logout
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                navLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href="#"
-                      className="nav-link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(link);
-                      }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))
+              {isLoggedIn && (
+                <li className="user-welcome">
+                  <div className="user-info">
+                    <span>Welcome, {user?.name}</span>
+                  </div>
+                </li>
               )}
+
+              {menuItems.map((item) => {
+                // Mobile-specific rendering to ensure sidebar closes
+                if (item.action) {
+                  return (
+                    <li key={item.name}>
+                      <Link
+                        href="#"
+                        className="nav-link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          item.action();
+                          setOpen(false);
+                        }}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  );
+                }
+
+                return (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="nav-link"
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

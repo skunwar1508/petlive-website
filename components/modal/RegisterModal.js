@@ -11,7 +11,7 @@ import { useAppContext } from "@/context/context";
 
 const RegisterModal = ({ show, onHide }) => {
   const [otpSent, setOtpSent] = useState(false);
-  const { login } = useAppContext();
+  const { login, setShowRegister } = useAppContext();
 
   const initialValues = {
     name: "",

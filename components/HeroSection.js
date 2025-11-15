@@ -1,4 +1,3 @@
-"use client";
 import { useAppContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 
@@ -31,7 +30,7 @@ export default function HeroSection() {
               <div className="btns-container">
                 <button
                   className="btn cta-btn"
-                  onClick={() => handleNavigation("/community")}
+                  onClick={() => router.push("/community")}
                 >
                   Explore Our Community
                 </button>

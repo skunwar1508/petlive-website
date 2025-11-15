@@ -6,10 +6,10 @@
   --primary-color: #8f5432;
   --primary-color-light: #fff7ed;
   --section-padding: 64px 0;
-  --first-heading: 64px;
-  --second-heading: 44px;
-  --third-heading: 32px;
-  --forth-heading: 24px;
+  --first-heading: 54px;
+  --second-heading: 36px;
+  --third-heading: 26px;
+  --forth-heading: 20px;
   --fifth-heading: 20px;
   --sixth-heading: 18px;
   --para-text: 16px;
@@ -29,7 +29,9 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+a:focus {
+    box-shadow: 0 0 0;
+}
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -310,7 +312,7 @@ main {
 /* ################################################### */
 
 .hero-section {
-  min-height: Calc(80vh - 80px);
+  /* min-height: Calc(80vh - 80px); */
   padding: var(--section-padding);
   position: relative;
   overflow: hidden;
@@ -336,8 +338,8 @@ main {
 }
 
 .hero-section .text-col {
-  padding-top: 75px;
-  padding-left: 75px;
+  /* padding-top: 75px;
+  padding-left: 75px; */
 }
 .hero-section .btns-container {
   display: flex;
@@ -355,7 +357,6 @@ main {
   font-size: var(--forth-heading);
   line-height: 1.6;
   margin-bottom: 24px;
-  word-spacing: 3px;
 }
 
 .cta-btn {
@@ -802,9 +803,8 @@ main {
 /* ################################################### */
 
 .discover-section {
-  padding: 96px 64px;
+  padding: 60px 0;
   border-radius: 12px;
-  margin-bottom: var(--font-margin-3);
 }
 .discover-section h3 {
   font-size: 36px;
@@ -847,8 +847,8 @@ main {
 .discover-section h5 {
   text-align: center;
   color: var(--text-color);
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 22px;
+    font-weight: 600;
 }
 .discover-section a {
   color: var(--primary-color);
@@ -1188,7 +1188,7 @@ main {
 }
 
 .community-page .blog-card h5 {
-  margin-bottom: var(--font-margin-1);
+  margin-bottom: var(--font-margin-2);
 }
 
 .community-page .cta-btn {

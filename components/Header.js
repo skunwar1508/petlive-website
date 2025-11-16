@@ -1,246 +1,255 @@
 "use client";
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Dropdown } from "react-bootstrap";
 import LoginModal from "./modal/LoginModal";
 import RegisterModal from "./modal/RegisterModal";
-import VerifyModal from "./modal/VerifyModal";
-import { useAppContext } from "@/context/context";
 import AskLoginModal from "./modal/askLoginModel";
+import { useAppContext } from "@/context/context";
+
+/*
+  Condensed Header component:
+  - Preserves desktop (react-bootstrap Dropdown) + mobile collapsible menu
+  - Consolidates repeated patterns for links/actions/children
+  - Keeps accessibility attributes and route/modal behavior
+*/
 
 const Header = () => {
-  const [open, setOpen] = useState(false); // mobile menu
-  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin } = useAppContext();
+  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin } =
+    useAppContext();
+  const pathname = usePathname();
+  const router = useRouter();
+  const headerRef = useRef(null);
 
-  const pathname = usePathname(); // watch route changes
+  const [open, setOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
-  const navLinks = [
-    { name: "Login", href: "#" },
-    { name: "Register", href: "#" },
-  ];
+  const menuConfig = useMemo(
+    () => [
+      { name: "Community", href: "/community" },
+      { name: "Blogs", href: "/blogs" },
+      { name: "Login", href: "#", show: "guest", actionKey: "login" },
+      { name: "Register", href: "#", show: "guest", actionKey: "register" },
+      {
+        name: "Profile",
+        href: "#",
+        show: "auth",
+        children: [
+          { name: () => `Welcome ${user?.name || ""}` },
+          { name: "Logout", href: "#", actionKey: "logout" },
+        ],
+      },
+    ],
+    [user?.name]
+  );
 
-  // Close mobile sidebar on resize to desktop
+  const actionHandlers = useMemo(
+    () => ({
+      login: () => setShowLogin(true),
+      register: () => setShowRegister(true),
+      logout: () => logout(),
+    }),
+    [logout, setShowLogin, setShowRegister]
+  );
+
+  const menuItems = useMemo(
+    () =>
+      menuConfig
+        .filter((it) => (it.show === "guest" ? !isLoggedIn : it.show === "auth" ? isLoggedIn : true))
+        .map((it) => ({
+          ...it,
+          action: it.actionKey ? actionHandlers[it.actionKey] : undefined,
+          children: it.children?.map((c) => ({ ...c, action: c.actionKey ? actionHandlers[c.actionKey] : undefined })),
+        })),
+    [menuConfig, isLoggedIn, actionHandlers]
+  );
+
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 768 && open) setOpen(false);
-    };
+    const onResize = () => window.innerWidth > 768 && setOpen(false);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [open]);
+  }, []);
 
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => (document.body.style.overflow = "");
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
-  // Close mobile menu when route changes (works with App Router)
   useEffect(() => {
-    // close only if it was open (avoid unnecessary state updates)
-    if (open) setOpen(false);
+    setOpen(false);
+    setOpenSubmenu(null);
   }, [pathname]);
 
-  // Handle click on nav link (for Login/Register)
-  const handleNavClick = (link) => {
-    if (link.name === "Login") {
-      setShowLogin(true);
-    }
-    if (link.name === "Register") {
-      setShowRegister(true);
-    }
-    setOpen(false);
-  };
+  useEffect(() => {
+    const outside = (e) => !headerRef.current || headerRef.current.contains(e.target) || setOpenSubmenu(null);
+    const onKey = (e) => e.key === "Escape" && (setOpen(false), setOpenSubmenu(null));
+    document.addEventListener("mousedown", outside);
+    document.addEventListener("touchstart", outside);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", outside);
+      document.removeEventListener("touchstart", outside);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
 
-  // helper for normal navigation links to also close mobile menu
-  const handleNavigateAndClose = (e, href) => {
-    // allow Link to do its job — just close menu
-    setOpen(false);
-  };
+  const navigate = useCallback(
+    (href) => {
+      if (!href || href === "#") return;
+      router.push(href);
+      setOpen(false);
+      setOpenSubmenu(null);
+    },
+    [router]
+  );
 
-  // single config array, then derive menuItems from it
-  const menuConfig = [
+  const handleAction = useCallback(
+    (action) => {
+      if (typeof action === "function") action();
+      setOpen(false);
+      setOpenSubmenu(null);
+    },
+    []
+  );
 
-    // auth-only
-    { name: "Community", href: "/community" },
-    { name: "Blogs", href: "/blogs" },
-    { name: "Profile", href: "/profile", show: "auth" },
-    // guest-only
-    { name: "Login", href: "#", show: "guest", actionKey: "login" },
-    { name: "Register", href: "#", show: "guest", actionKey: "register" },
+  const renderItem = (item, opts = { mobile: false }) => {
+    const label = typeof item.name === "function" ? item.name() : item.name;
+    const hasChildren = item.children?.length > 0;
 
-    // logout action for authenticated users
-    { name: "Logout", href: "#", show: "auth", actionKey: "logout" },
-  ];
+    // top-level action/no children
+    if (item.action && !hasChildren)
+      return opts.mobile ? (
+        <li key={label}>
+          <button className="nav-link btn-as-link" onClick={() => handleAction(item.action)}>
+            {label}
+          </button>
+        </li>
+      ) : (
+        <li key={label}>
+          <button className="nav-link btn-as-link" onClick={() => handleAction(item.action)}>
+            {label}
+          </button>
+        </li>
+      );
 
-  // map action keys to actual functions that use context setters
-  const actionHandlers = {
-    login: () => setShowLogin(true),
-    register: () => setShowRegister(true),
-    logout: () => logout(),
-  };
-
-  // derive visible menu items based on auth and role
-  const menuItems = menuConfig
-    .filter((item) => {
-      if (item.show === "guest") return !isLoggedIn;
-      if (item.show === "auth") return isLoggedIn;
-      return true;
-    })
-    .filter((item) => {
-      // if roles are specified, ensure user has one of them
-      if (item.roles && item.roles.length > 0) {
-        return !!user && item.roles.includes(user?.role);
+    // items with children
+    if (hasChildren) {
+      const expanded = openSubmenu === item.name;
+      if (!opts.mobile) {
+        return (
+          <li key={label} className={`has-children ${expanded ? "open" : ""}`}>
+            <Dropdown show={expanded} onToggle={(isOpen) => setOpenSubmenu(isOpen ? item.name : null)}>
+              <Dropdown.Toggle
+                as="button"
+                className="nav-link submenu-toggle"
+                aria-haspopup="true"
+                aria-expanded={expanded}
+                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setOpenSubmenu(expanded ? null : item.name))}
+              >
+                {label}
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="submenu desktop" aria-label={`${label} submenu`}>
+                {item.children.map((c, i) =>
+                  !c.href && !c.action ? (
+                    <Dropdown.Header key={i} className="text-only">{typeof c.name === "function" ? c.name() : c.name}</Dropdown.Header>
+                  ) : c.action ? (
+                    <Dropdown.Item key={i} as="button" onClick={() => handleAction(c.action)}>{typeof c.name === "function" ? c.name() : c.name}</Dropdown.Item>
+                  ) : (
+                    <Dropdown.Item key={i} onClick={() => navigate(c.href)}>{typeof c.name === "function" ? c.name() : c.name}</Dropdown.Item>
+                  )
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
+          </li>
+        );
       }
-      return true;
-    })
-    .map((item) => ({
-      ...item,
-      // attach real action function if actionKey present
-      action: item.actionKey ? actionHandlers[item.actionKey] : undefined,
-    }));
 
-  // helper renderer for menu items (desktop & mobile share logic)
-  const renderMenuItem = (item, isMobile = false) => {
-    const key = item.name;
-    // action-driven items (modals, logout)
-    if (item.action) {
+      // mobile submenu
       return (
-        <li key={key}>
-          <Link
-            href="#"
-            className="nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              item.action();
-              setOpen(false);
-            }}
+        <li key={label} className={`has-children ${expanded ? "open" : ""}`}>
+          <button
+            className="nav-link submenu-toggle"
+            aria-haspopup="true"
+            aria-expanded={expanded}
+            onClick={() => setOpenSubmenu((p) => (p === item.name ? null : item.name))}
           >
-            {item.name}
-          </Link>
+            {label} <span className="caret">▾</span>
+          </button>
+          <ul className="submenu mobile" role="menu" style={{ display: expanded ? "block" : "none" }}>
+            {item.children.map((c, i) =>
+              !c.href && !c.action ? (
+                <li key={i} className="submenu-item text-only"><span>{typeof c.name === "function" ? c.name() : c.name}</span></li>
+              ) : c.action ? (
+                <li key={i} className="submenu-item"><button className="nav-link btn-as-link" onClick={() => handleAction(c.action)}>{typeof c.name === "function" ? c.name() : c.name}</button></li>
+              ) : (
+                <li key={i} className="submenu-item"><button className="nav-link btn-as-link" onClick={() => navigate(c.href)}>{typeof c.name === "function" ? c.name() : c.name}</button></li>
+              )
+            )}
+          </ul>
         </li>
       );
     }
 
-    // normal navigation links
-    return (
-      <li key={key}>
-        <Link
-          href={item.href}
-          className="nav-link"
-          onClick={(e) => {
-            // desktop uses handler that just closes menu, mobile also closes
-            handleNavigateAndClose(e, item.href);
-            if (isMobile) setOpen(false);
-          }}
-        >
-          {item.name}
-        </Link>
+    // normal link
+    return opts.mobile ? (
+      <li key={label}>
+        <button className="nav-link btn-as-link" onClick={() => navigate(item.href)}>
+          {label}
+        </button>
+      </li>
+    ) : (
+      <li key={label}>
+        <button className="nav-link btn-as-link" onClick={() => navigate(item.href)}>
+          {label}
+        </button>
       </li>
     );
   };
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <div className="container">
         <div className="header-bar">
-          {/* Logo */}
           <Link href="/" className="logo-link" onClick={() => setOpen(false)}>
             <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
           </Link>
 
-          {/* Desktop Links */}
-          <ul className="desktop-links">
-            {isLoggedIn && (
-              <li className="user-welcome">
-                <div className="user-info">
-                  <span>Welcome, {user?.name}</span>
-                </div>
-              </li>
-            )}
+          <nav className="nav-desktop" aria-label="Primary">
+            <ul className="desktop-links">
+              {menuItems.map((m) => renderItem(m, { mobile: false }))}
+            </ul>
+          </nav>
 
-            {menuItems.map((item) => renderMenuItem(item, false))}
-          </ul>
-
-          {/* Hamburger for Mobile */}
-          <button
-            className="mobile-toggle mobile-open"
-            aria-expanded={open}
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen(true)}
-          >
+          <button className="mobile-toggle mobile-open" aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(true)}>
             ☰
           </button>
         </div>
 
-        {/* Full-Width Sidebar for Mobile */}
         <div className={`mobile-sidebar ${open ? "open" : ""}`}>
           <div className="sidebar-content">
-            {/* Close button */}
-            <button
-              className="mobile-toggle mobile-close"
-              aria-expanded={!open}
-              aria-label={"Close menu"}
-              onClick={() => setOpen(false)}
-            >
+            <button className="mobile-toggle mobile-close" aria-expanded={!open} aria-label="Close menu" onClick={() => setOpen(false)}>
               ✕
             </button>
+
             <Link href="/" onClick={() => setOpen(false)}>
               <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
             </Link>
 
-            <ul className="nav-links">
-              {isLoggedIn && (
-                <li className="user-welcome">
-                  <div className="user-info">
-                    <span>Welcome, {user?.name}</span>
-                  </div>
-                </li>
-              )}
-
-              {menuItems.map((item) => {
-                // Mobile-specific rendering to ensure sidebar closes
-                if (item.action) {
-                  return (
-                    <li key={item.name}>
-                      <Link
-                        href="#"
-                        className="nav-link"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          item.action();
-                          setOpen(false);
-                        }}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  );
-                }
-
-                return (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="nav-link"
-                      onClick={() => setOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                );
-              })}
+            <ul className="nav-links mobile-nav" role="menu" aria-label="Mobile primary">
+              {isLoggedIn && <li className="user-welcome"><div className="user-info">Welcome, {user?.name}</div></li>}
+              {menuItems.map((m) => renderItem(m, { mobile: true }))}
             </ul>
           </div>
         </div>
       </div>
-      {/* Modals */}
+
       <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
-      <RegisterModal
-        show={showRegister}
-        onHide={() => setShowRegister(false)}
-      />
+      <RegisterModal show={showRegister} onHide={() => setShowRegister(false)} />
       <AskLoginModal show={showAskLogin} onHide={() => setShowAskLogin(false)} />
-      {/* <VerifyModal show={showVerify} onHide={() => setShowVerify(false)} /> */}
     </header>
   );
 };

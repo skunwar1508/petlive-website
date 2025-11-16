@@ -50,7 +50,7 @@ const FaqSection = ({ blogData, isHome, totalCounts }) => {
         <div className="row justify-content-center">
           <div className="col-lg-8 col-md-10">
             <Accordion defaultActiveKey={visibleFaqs.length ? "0" : undefined}>
-              {visibleFaqs.map((item, idx) => (
+              {visibleFaqs?.map((item, idx) => (
                 <Accordion.Item eventKey={String(idx)} key={idx}>
                   <Accordion.Header>{item.q}</Accordion.Header>
                   <Accordion.Body>{item.a}</Accordion.Body>

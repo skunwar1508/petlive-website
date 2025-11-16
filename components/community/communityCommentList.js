@@ -241,10 +241,6 @@ const CommunitypostList = ({ id, communityDetails }) => {
         ref={scrollableDivRef}
         onScroll={handleScroll}
       >
-        <h1 className="heading-secondary">
-          {communityDetails?.name} ({communityDetails?.members?.length || 0}{" "}
-          members)
-        </h1>
         {posts.map((post) => (
           <CommunitypostChatCard
             key={post?._id}

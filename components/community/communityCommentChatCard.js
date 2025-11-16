@@ -106,6 +106,7 @@ const CommunityCommentChatCard = ({ data, hideComment }) => {
         )}
       </div>
       <div className="aritcleCommentContent">
+        <div className="contentbox">
         {isAnonymouse ? (
           <h4>Anonymous</h4>
         ) : (
@@ -123,6 +124,7 @@ const CommunityCommentChatCard = ({ data, hideComment }) => {
         )}
 
         <p>{content}</p>
+        </div>
         {image?.path && (
           <div className="chatImg">
             <img

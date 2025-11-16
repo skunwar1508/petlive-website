@@ -37,6 +37,12 @@ const LoginModal = ({ show, onHide }) => {
         });
         common.success(data?.message || "Login successful");
         localStorage.setItem("token", data?.data?.token);
+        const token = data?.data?.token;
+        if (token) {
+          const maxAge = 7 * 24 * 60 * 60; // 7 days
+          const secureFlag = typeof window !== "undefined" && window.location.protocol === "https:" ? "Secure; " : "";
+          document.cookie = `token=${encodeURIComponent(token)}; Path=/; Max-Age=${maxAge}; ${secureFlag}SameSite=Lax`;
+        }
         login(data?.data);
         setOtpSent(false);
         resetForm();

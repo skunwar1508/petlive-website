@@ -13,6 +13,7 @@ import { useAppContext } from "@/context/context";
 
 export default function CommunityInfo({ communityDetails }) {
   const { isLoggedIn, setShowAskLogin } = useAppContext();
+  console.log("communityDetails", communityDetails);
 
   const JoinedCommunity = () => {
     if (isLoggedIn === false) {
@@ -36,9 +37,9 @@ export default function CommunityInfo({ communityDetails }) {
     <>
       <section className="page-section blog-detail-page">
         <div className="container">
-          <h1 className="heading-primary">{communityDetails?.name}</h1>
+          <h1 className="heading-secondary">{communityDetails?.name}</h1>
           <div className="row mb-5">
-            <div className="col-lg-12 ">
+            <div className="col-lg-6 ">
               <Link href="/blog" className="blog-card large-card ">
                 <img
                   src={
@@ -50,44 +51,57 @@ export default function CommunityInfo({ communityDetails }) {
                 />
               </Link>
             </div>
-          </div>
-          <div className="d-flex justify-content-between mb-5">
-            <p>Active Members : {communityDetails?.members?.length || 0}</p>
-            <p>
-              Created Date :{" "}
-              <DateFormate
-                date={communityDetails?.createdAt}
-                formate={"DD MMMM YYYY"}
-              />
-            </p>
-          </div>
-          <div
-            className="mb-5"
-            dangerouslySetInnerHTML={{ __html: communityDetails?.description }}
-          ></div>
+            <div className="col-lg-6 ">
+              <div className="d-flex justify-content-between mb-3">
+                <p>Active Members : {communityDetails?.members?.length || 0}</p>
+                <p>
+                  Created Date :{" "}
+                  <DateFormate
+                    date={communityDetails?.createdAt}
+                    formate={"DD MMMM YYYY"}
+                  />
+                </p>
+              </div>
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{ __html: communityDetails?.description }}
+              ></div>
 
-          <div className="text-center">
-            {communityDetails?.isMember ? (
-              <Link href={`/community/view/${communityDetails._id}`} className="cta-btn">
-                View Community
-              </Link>
-            ) : (
-              <button
-                type="button"
-                className="cta-btn"
-                onClick={() => JoinedCommunity()}
-              >
-                Join Community
-              </button>
-            )}
+              <div className="text-center">
+                {communityDetails?.isMember ? (
+                  <Link href={`/community/view/${communityDetails._id}`} className="cta-btn">
+                    View Community
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    className="cta-btn"
+                    onClick={() => JoinedCommunity()}
+                  >
+                    Join Community
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </>
   );
 }
-export async function getServerSideProps(context) {
-  const { data } = await fetchCommunityDetails(context);
+export async function getServerSideProps(context) {  // read cookies from request and parse to get token
+  const cookieHeader = context.req?.headers?.cookie || "";
+  const cookies = cookieHeader
+    .split(";")
+    .filter(Boolean)
+    .reduce((acc, c) => {
+      const [k, ...v] = c.split("=");
+      acc[k.trim()] = decodeURIComponent((v || []).join("=").trim());
+      return acc;
+    }, {});
+  // common cookie names used for tokens; adjust as needed
+  const token = cookies.token || cookies.authToken || cookies.access_token || cookies.jwt || "";
+  const { data } = await fetchCommunityDetails(context, token);
 
   return {
     props: {

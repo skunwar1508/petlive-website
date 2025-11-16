@@ -5,7 +5,7 @@
   --text-light-color: #828180;
   --primary-color: #8f5432;
   --primary-color-light: #fff7ed;
-  --section-padding: 64px 0;
+  --section-padding: 40px 0;
   --first-heading: 54px;
   --second-heading: 36px;
   --third-heading: 26px;
@@ -1195,7 +1195,6 @@ main {
 
 .blog-detail-page .large-card {
   padding: 0;
-  height: 60vh;
   justify-content: center;
 }
 
@@ -1205,7 +1204,7 @@ main {
 }
 
 .blog-detail-page p {
-  font-size: var(--fifth-heading);
+  font-size: var(--small-text);
   color: var(--text-color);
 }
 
@@ -1290,28 +1289,28 @@ main {
 .community-chat-page .communityChatBody {}
 
 .communitChatListBody {
-  height: 70vh;
-  overflow: auto;
-  margin-bottom: 12px;
+    height: calc(100vh - 190px);
+    overflow: auto;
+    margin-bottom: 12px;
 }
 
 .communitChatListBody .CommunityCommetBody {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-bottom: 36px;
-  gap: 24px;
+  margin-bottom: 20px;
+    gap: 14px;
 }
 
 .CommunityCommetBody .aritcleUseImg {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  border: 2px solid var(--text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .CommunityCommetBody .aritcleUseImg img {
@@ -1320,23 +1319,40 @@ main {
 
 .aritcleCommentContent {
   text-align: left;
+  width: 100%;
+}
+section.page-section.community-chat-page {
+    padding: 15px 0;
 }
 
+section.page-section.community-chat-page .heading-secondary {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.community-chat-page .communityChatBody {
+    border: 2px solid #e1e1e1;
+    padding: 8px;
+    border-radius: 10px;
+    background: #fff;
+}
 .aritcleCommentContent h4 {
-  margin-bottom: 5px;
-  font-size: 24px;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .aritcleCommentContent p {
-  margin-bottom: 12px;
-  font-size: var(--sixth-heading);
+  margin-bottom: 0;
+  font-size: 13px;
 }
 
 .aritcleCommentContent .chatImg {
-  width: 264px;
-  height: 264px;
-  display: flex;
-  margin-bottom: 16px;
+width: 100px;
+    height: 100px;
+    display: flex;
+    margin-bottom: 16px;
 }
 
 .aritcleCommentContent .chatImg img {
@@ -1365,7 +1381,8 @@ main {
 .aritcleCommentContent .communityReplyComtLts li a {
   display: flex;
   color: var(--primary-color);
-  gap: 12px;
+      gap: 5px;
+    font-size: 13px;
 }
 
 .aritcleCommentContent .communityReplyComtLts .flagDropdown .btn {
@@ -1390,7 +1407,7 @@ main {
 }
 
 .aritcleCommentContent .communityReplyComtLts img {
-  width: 20px;
+  width: 11px;
 }
 
 .aritcleCommentContent .communityReplyComtLts li:hover {
@@ -1403,20 +1420,15 @@ main {
   position: relative;
 }
 
-/* Input styled like the screenshot */
 .patientWritMsgBx .msg-input {
-  height: 60px;
-  /* tall pill */
-  background: #fff7ef;
-  /* light cream */
-  border: 2px solid #171717;
-  /* dark outline */
-  border-radius: 12px;
-  padding: 0 108px 0 16px;
-  /* right padding for icons */
-  box-shadow: inset 0 -3px 0 #171717;
-  /* thicker bottom edge look */
-  outline: none;
+    height: 50px;
+    background: #fff7ef;
+    border: 2px solid #171717;
+    border-radius: 12px;
+    padding: 0 108px 0 16px;
+    box-shadow: inset 0 -3px 0 #171717;
+    outline: none;
+    font-size: 14px;
 }
 
 .patientWritMsgBx .msg-input::placeholder {
@@ -1633,7 +1645,25 @@ main {
   color: #5a2b0f;
   text-decoration: underline;
 }
+.communityStatusTabs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 
+.communityStatusTabs span {
+    position: relative;
+    display: inline-block;
+    border-bottom: 3px solid transparent;
+    color: #aeaeae;
+    cursor: pointer;
+    padding-bottom: 16px;
+}
+
+.communityStatusTabs span.active {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
 /* responsive tweaks */
 @media (max-width: 576px) {
   .accordion .accordion-button {
@@ -1645,4 +1675,17 @@ main {
     padding: 16px;
     font-size: 15px;
   }
+}
+.page-section .heading-secondary {
+    margin-bottom: 20px;
+}
+.contentbox {
+    background: #f9f9f9;
+    padding: 10px 13px;
+    margin-bottom: 10px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: max-content;
+    border-radius: 5px;
 }

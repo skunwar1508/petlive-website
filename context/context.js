@@ -22,6 +22,11 @@ export const AppProvider = ({ children }) => {
         setUser(null);
         setIsLoggedIn(false);
         localStorage.removeItem('token');
+        if (typeof window !== 'undefined') {
+            // remove cookie named 'token'
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;';
+            document.cookie = 'token=; Max-Age=0; path=/;';
+        }
         router.push('/');
     };
     const getProfile = async () => {

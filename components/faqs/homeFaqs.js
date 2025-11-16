@@ -1,8 +1,5 @@
-import authAxios from "@/services/authAxios";
-import common from "@/services/common";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-const Accordion = require("react-bootstrap/Accordion").default;
+import Accordion from "react-bootstrap/Accordion";
 
 const FaqSection = ({ isHome, totalCounts }) => {
 

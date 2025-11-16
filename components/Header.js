@@ -169,28 +169,25 @@ const Header = () => {
       }
 
       // mobile submenu
+      // Mobile: don't show a collapsible submenu for Profile — render only actionable children (e.g. Logout)
       return (
-        <li key={label} className={`has-children ${expanded ? "open" : ""}`}>
-          <button
-            className="nav-link submenu-toggle"
-            aria-haspopup="true"
-            aria-expanded={expanded}
-            onClick={() => setOpenSubmenu((p) => (p === item.name ? null : item.name))}
-          >
-            {label} <span className="caret">▾</span>
-          </button>
-          <ul className="submenu mobile" role="menu" style={{ display: expanded ? "block" : "none" }}>
-            {item.children.map((c, i) =>
-              !c.href && !c.action ? (
-                <li key={i} className="submenu-item text-only"><span>{typeof c.name === "function" ? c.name() : c.name}</span></li>
-              ) : c.action ? (
-                <li key={i} className="submenu-item"><button className="nav-link btn-as-link" onClick={() => handleAction(c.action)}>{typeof c.name === "function" ? c.name() : c.name}</button></li>
-              ) : (
-                <li key={i} className="submenu-item"><button className="nav-link btn-as-link" onClick={() => navigate(c.href)}>{typeof c.name === "function" ? c.name() : c.name}</button></li>
-              )
-            )}
-          </ul>
-        </li>
+        <React.Fragment key={label}>
+          {item.children
+            .filter((c) => typeof c.action === "function" || c.href) // drop text-only entries like welcome
+            .map((c, i) => (
+              <li key={`${label}-child-${i}`}>
+                {c.action ? (
+                  <button className="nav-link btn-as-link" onClick={() => handleAction(c.action)}>
+                    {typeof c.name === "function" ? c.name() : c.name}
+                  </button>
+                ) : (
+                  <button className="nav-link btn-as-link" onClick={() => navigate(c.href)}>
+                    {typeof c.name === "function" ? c.name() : c.name}
+                  </button>
+                )}
+              </li>
+            ))}
+        </React.Fragment>
       );
     }
 

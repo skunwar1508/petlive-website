@@ -121,6 +121,9 @@
     gap: 12px;
     justify-content: center;
   }
+  .services-text .block{
+    text-align: center;
+  }
 }
 
 @media (min-width: 769px) {

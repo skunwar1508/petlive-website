@@ -8,37 +8,28 @@ import DateFormate from "@/components/DateFormate";
 import common from "@/services/common";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { fetchCommunityDetails } from "@/utils/serverApi";
+import { useAppContext } from "@/context/context";
 
-export default function CommunityInfo() {
-  const [communityDetails, setCommunityDetails] = useState({});
-  const params = useParams() || {};
-  const communityId = params.id;
-  const router = useRouter();
-
-  // Fetch community details based on slug or ID
-  const fetchCommunityDetails = async () => {
-    try {
-      const { data } = await authAxios.get(`/community/get/${communityId}`);
-      setCommunityDetails(data?.data || {});
-    } catch (error) {
-      console.error("Error fetching community details:", error);
-    }
-  };
-  useEffect(() => {
-    if (communityId) fetchCommunityDetails();
-  }, [communityId]);
+export default function CommunityInfo({ communityDetails }) {
+  const { isLoggedIn, setShowAskLogin } = useAppContext();
 
   const JoinedCommunity = () => {
-    authAxios
-      .get(`/community/member/join/${communityId}`)
-      .then((response) => {
-        fetchCommunityDetails();
-        common.success("You have successfully joined the community.");
-        router.push(`/community/view/${communityId}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (isLoggedIn === false) {
+      setShowAskLogin(true);
+      return;
+    } else {
+      authAxios
+        .get(`/community/member/join/${communityDetails._id}`)
+        .then((response) => {
+          fetchCommunityDetails();
+          common.success("You have successfully joined the community.");
+          router.push(`/community/view/${communityDetails._id}`);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -77,7 +68,7 @@ export default function CommunityInfo() {
 
           <div className="text-center">
             {communityDetails?.isMember ? (
-              <Link href={`/community/view/${communityId}`} className="cta-btn">
+              <Link href={`/community/view/${communityDetails._id}`} className="cta-btn">
                 View Community
               </Link>
             ) : (
@@ -94,4 +85,13 @@ export default function CommunityInfo() {
       </section>
     </>
   );
+}
+export async function getServerSideProps(context) {
+  const { data } = await fetchCommunityDetails(context);
+
+  return {
+    props: {
+      communityDetails: data,
+    }
+  }
 }

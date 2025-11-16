@@ -1421,3 +1421,7 @@ main {
 .login-modal .modal-body {
     padding: 30px 40px;
 }
+
+.cursor-pointer {
+  cursor: pointer !important;
+}

@@ -8,10 +8,12 @@ import common from "@/services/common";
 import UnauthAxios from "@/services/unauthAxios";
 import { ErrorMessage } from "../formik/errorMessage";
 import { useAppContext } from "@/context/context";
+import { useRouter } from "next/router";
 
 const LoginModal = ({ show, onHide }) => {
   const [otpSent, setOtpSent] = useState(false);
   const { login, setShowRegister } = useAppContext();
+  const router = useRouter();
 
   const initialValues = {
     phone: "",
@@ -39,6 +41,7 @@ const LoginModal = ({ show, onHide }) => {
         setOtpSent(false);
         resetForm();
         onHide();
+        router.reload();
       } else {
         const { data } = await UnauthAxios.post("/patient/login", {
           phone: values.phone,
@@ -122,12 +125,12 @@ const LoginModal = ({ show, onHide }) => {
           <div className="text-center mt-3">
             <p className="mb-0">
               Don't have an account?
-              <Link href="/" onClick={()=>{
+              <a onClick={()=>{
                 onHide();
                 setShowRegister(true);
-              }} className="ms-2 register-link">
+              }} className="ms-2 register-link cursor-pointer">
                 Register now
-              </Link>
+              </a>
             </p>
           </div>
         </form>

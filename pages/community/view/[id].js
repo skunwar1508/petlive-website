@@ -3,25 +3,9 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import CommunityCommentList from "@/components/community/communityCommentList";
+import { fetchCommunityDetails } from "@/utils/serverApi";
 
-const CommunityView = () => {
-  const [communityDetails, setCommunityDetails] = useState({});
-  const params = useParams() || {};
-  const communityId = params.id;
-  const router = useRouter();
-
-  // Fetch community details based on slug or ID
-  const fetchCommunityDetails = async () => {
-    try {
-      const { data } = await authAxios.get(`/community/get/${communityId}`);
-      setCommunityDetails(data?.data || {});
-    } catch (error) {
-      console.error("Error fetching community details:", error);
-    }
-  };
-  useEffect(() => {
-    if (communityId) fetchCommunityDetails();
-  }, [communityId]);
+const CommunityView = ({ communityDetails }) => {
   return (
     <>
       <section className="page-section community-chat-page">
@@ -34,7 +18,7 @@ const CommunityView = () => {
 
             {communityDetails?.isMember && (
               <CommunityCommentList
-                id={communityId}
+                id={communityDetails._id}
                 communityDetails={communityDetails}
               />
             )}
@@ -44,5 +28,16 @@ const CommunityView = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  const {data} = await fetchCommunityDetails(context);
+
+  return {
+    props: {
+      communityDetails: data,
+    }
+  }
+}
+
 
 export default CommunityView;

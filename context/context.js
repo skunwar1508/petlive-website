@@ -11,6 +11,7 @@ export const AppProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
+    const [showAskLogin, setShowAskLogin] = useState(false);
     const router = useRouter();
 
     const login = (user) => {
@@ -49,7 +50,13 @@ export const AppProvider = ({ children }) => {
     }, []);
 
     return (
-        <AppContext.Provider value={{ user, isLoggedIn, login, logout, showLogin, setShowLogin, showRegister, setShowRegister }}>
+        <AppContext.Provider value={{ 
+            user, isLoggedIn, 
+            login, logout, 
+            showLogin, setShowLogin, 
+            showRegister, setShowRegister, 
+            showAskLogin, setShowAskLogin 
+        }}>
             {children}
         </AppContext.Provider>
     );

@@ -41,3 +41,24 @@ export const fetchTopFeaturedBlogs = async () => {
         };
     }
 };
+
+export const fetchCommunityDetails = async (context) => {
+    const communityId = context.query.id;
+
+    try {
+        const res = await fetch(`${ROOT_URL}/community/get/${communityId}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
+        const json = await res.json();
+
+        return {
+            data: json?.data || {},
+        };
+    } catch (error) {
+        console.error("Server side fetch error:", error);
+        return {
+            data: {},
+        };
+    }
+};

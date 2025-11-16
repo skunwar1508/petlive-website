@@ -6,10 +6,11 @@ import LoginModal from "./modal/LoginModal";
 import RegisterModal from "./modal/RegisterModal";
 import VerifyModal from "./modal/VerifyModal";
 import { useAppContext } from "@/context/context";
+import AskLoginModal from "./modal/askLoginModel";
 
 const Header = () => {
   const [open, setOpen] = useState(false); // mobile menu
-  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister } = useAppContext();
+  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin } = useAppContext();
 
   const pathname = usePathname(); // watch route changes
 
@@ -238,6 +239,7 @@ const Header = () => {
         show={showRegister}
         onHide={() => setShowRegister(false)}
       />
+      <AskLoginModal show={showAskLogin} onHide={() => setShowAskLogin(false)} />
       {/* <VerifyModal show={showVerify} onHide={() => setShowVerify(false)} /> */}
     </header>
   );

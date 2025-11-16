@@ -11,7 +11,7 @@ import { useAppContext } from "@/context/context";
 
 const RegisterModal = ({ show, onHide }) => {
   const [otpSent, setOtpSent] = useState(false);
-  const { login, setShowRegister } = useAppContext();
+  const { login, setShowRegister, setShowLogin } = useAppContext();
 
   const initialValues = {
     name: "",
@@ -151,6 +151,21 @@ const RegisterModal = ({ show, onHide }) => {
           >
             Submit
           </button>
+
+          <div className="text-center mt-3">
+            <p className="mb-0">
+              Already have an account?
+              <a
+                onClick={(e) => {
+                  onHide();
+                  setShowLogin(true);
+                }}
+                className="ms-2 register-link cursor-pointer"
+              >
+                Login
+              </a>
+            </p>
+          </div>
         </form>
       </Modal.Body>
     </Modal>

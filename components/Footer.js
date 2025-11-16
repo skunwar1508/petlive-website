@@ -70,8 +70,8 @@ const Footer = () => {
             <div className="footer-group">
               <h5 className="footer-heading">Resources</h5>
               <ul className="footer-links list-unstyled">
-                <li><Link href="/blog">Blog</Link></li>
-                <li><Link href="/faq">FAQ</Link></li>
+                <li><Link href="/blogs">Blog</Link></li>
+                <li><Link href="/faqs">FAQ</Link></li>
                 <li><Link href="/care-guides">Care Guides</Link></li>
                 <li><Link href="/testimonials">Testimonials</Link></li>
               </ul>

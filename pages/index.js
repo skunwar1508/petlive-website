@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 import DiscoverSection from "@/components/DiscoverSection";
 import ROOT_URL from "@/services/api-url";
 import { communityPaging, fetchTopFeaturedBlogs } from "@/utils/serverApi";
+import FaqSection from "@/components/faqs/homeFaqs";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function Home({ discoverData, blogData }) {
       {/* <TrustBadges /> */}
       <BlogSection blogData={blogData} />
       <FamousSection />
+      <FaqSection isHome={true} totalCounts={5} />
     </>
   );
 }

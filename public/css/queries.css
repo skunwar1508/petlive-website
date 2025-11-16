@@ -124,6 +124,8 @@
   .services-text .block{
     text-align: center;
   }
+  .footer-logo { margin: 0 auto; text-align: center; } 
+  .footer-group { text-align: center; }
 }
 
 @media (min-width: 769px) {

@@ -4,10 +4,43 @@ import { ToastContainer } from "react-toastify";
 import { AppProvider } from "@/context/context";
 import Layout from "@/layout/layout.index";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import Router from "next/router";
+import Loader from "@/components/common/loader";
 
 
 
 export default function App({ Component, pageProps }) {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
+
+    Router.events.on("routeChangeStart", handleStart);
+    Router.events.on("routeChangeComplete", handleComplete);
+    Router.events.on("routeChangeError", handleComplete);
+
+    // show loader on hard refresh until window 'load' fires
+    if (typeof window !== "undefined" && document.readyState !== "complete") {
+      setLoading(true);
+      const onLoad = () => setLoading(false);
+      window.addEventListener("load", onLoad);
+      return () => {
+        window.removeEventListener("load", onLoad);
+        Router.events.off("routeChangeStart", handleStart);
+        Router.events.off("routeChangeComplete", handleComplete);
+        Router.events.off("routeChangeError", handleComplete);
+      };
+    }
+
+    return () => {
+      Router.events.off("routeChangeStart", handleStart);
+      Router.events.off("routeChangeComplete", handleComplete);
+      Router.events.off("routeChangeError", handleComplete);
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -19,9 +52,15 @@ export default function App({ Component, pageProps }) {
       <AppProvider>
         <Layout>
           <ToastContainer />
+          {loading && (
+            <Loader />
+          )}
           <Component {...pageProps} />
         </Layout>
       </AppProvider>
+
+      
     </>
   );
 }
+

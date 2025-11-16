@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 const Accordion = require("react-bootstrap/Accordion").default;
 
-const FaqSection = ({ blogData, isHome, totalCounts }) => {
+const FaqSection = ({ isHome, totalCounts }) => {
 
   // use react-bootstrap Accordion (require here so we don't need to modify top imports)
 
@@ -52,8 +52,8 @@ const FaqSection = ({ blogData, isHome, totalCounts }) => {
             <Accordion defaultActiveKey={visibleFaqs.length ? "0" : undefined}>
               {visibleFaqs?.map((item, idx) => (
                 <Accordion.Item eventKey={String(idx)} key={idx}>
-                  <Accordion.Header>{item.q}</Accordion.Header>
-                  <Accordion.Body>{item.a}</Accordion.Body>
+                  <Accordion.Header>{item?.q}</Accordion.Header>
+                  <Accordion.Body>{item?.a}</Accordion.Body>
                 </Accordion.Item>
               ))}
             </Accordion>

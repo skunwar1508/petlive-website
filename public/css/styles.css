@@ -1689,3 +1689,7 @@ width: 100px;
     max-width: max-content;
     border-radius: 5px;
 }
+.blog-view-section .blog-card {
+    height: auto;
+    margin-bottom: 20px;
+}

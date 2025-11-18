@@ -13,7 +13,7 @@ const BlogList = ({ initialPaginData, pageHasChanged }) => {
               {initialPaginData?.list?.length > 0 ? (
                 initialPaginData?.list.map((blog, index) => (
                   <Link
-                    href={`/blogs/${blog?._id}/${blog?.slug}`}
+                    href={`/blogs/view/${blog?._id}-${blog?.slug}`}
                     key={index}
                     className="blog-card  "
                   >

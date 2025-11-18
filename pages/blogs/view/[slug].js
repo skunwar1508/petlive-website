@@ -1,10 +1,5 @@
-import Head from "next/head";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import authAxios from "@/services/authAxios";
-import { useParams } from "next/navigation";
-import Moment from "react-moment";
 import common from "@/services/common";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -13,9 +8,8 @@ const DateFormate = dynamic(() => import("@/components/DateFormate"), {
   ssr: false,
 });
 
-export default function BlogDetail({ blogDetails, blogId }) {
+export default function BlogDetail({ blogDetails }) {
   const [recentBlogs, setRecentBlogs] = useState([]);
-  const params = useParams() || {};
 
 
   const getData = async () => {
@@ -35,15 +29,17 @@ export default function BlogDetail({ blogDetails, blogId }) {
     common.loader(false);
   };
 
-  useEffect(async () => {
-    getData();
-    // const res = await getBlogById(blogId);
-    // console.log("Fetched Blog Data:", res);
+  useEffect(() => {
+    const fetchData = async () => {
+      await getData();
+      // const res = await getBlogById(blogId);
+      // console.log("Fetched Blog Data:", res);
+    };
+    fetchData();
   }, []);
-
   return (
     <>
-      <section className="page-section blog-detail-page">
+      <section className="page-section blog-view-section">
         <div className="container">
           <div className="row mb-5">
             <div className="col-lg-12 ">
@@ -77,7 +73,7 @@ export default function BlogDetail({ blogDetails, blogId }) {
             <div className="col-lg-4 ">
               <h3 className="heading-tertiary">Recent Blogs</h3>
               {recentBlogs?.map((blog, index) => (
-                <Link href={`/blogs/${blog?._id}/${blog?.slug}`} key={index}>
+                <Link href={`/blogs/view/${blog?._id}-${blog?.slug}`} key={index}>
                   <div className="blog-card small-card ">
                     <img
                       src={
@@ -102,12 +98,11 @@ export default function BlogDetail({ blogDetails, blogId }) {
 }
 
 export async function getServerSideProps(context) {
-  const { data } = await getBlogById(context.params.blogId);
+  const { data } = await getBlogById(context.params.slug.split('-')[0]);
 
   return {
     props: {
-      blogDetails: data || {},
-      blogId: context.params.blogId,
+      blogDetails: data || {}
     },
   };
 }

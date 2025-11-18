@@ -30,7 +30,7 @@ export default function HeroSection() {
               <div className="btns-container">
                 <button
                   className="btn cta-btn"
-                  onClick={() => router.push("/community")}
+                  onClick={() => router.push("/community/list")}
                 >
                   Explore Our Community
                 </button>

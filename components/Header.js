@@ -28,7 +28,7 @@ const Header = () => {
 
   const menuConfig = useMemo(
     () => [
-      { name: "Community", href: "/community" },
+      { name: "Community", href: "/community/list" },
       { name: "Blogs", href: "/blogs" },
       { name: "Login", href: "#", show: "guest", actionKey: "login" },
       { name: "Register", href: "#", show: "guest", actionKey: "register" },

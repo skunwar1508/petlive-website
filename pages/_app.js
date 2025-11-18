@@ -7,10 +7,11 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import Loader from "@/components/common/loader";
+import { paginateBlogCategory } from "@/utils/serverApi";
 
 
 
-export default function App({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -49,8 +50,8 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AppProvider>
-        <Layout>
+      <AppProvider pageProps={{ ...pageProps }} values={{ loading, setLoading }}>
+        <Layout pageProps={{ ...pageProps }}>
           <ToastContainer />
           {loading && (
             <Loader />
@@ -64,3 +65,21 @@ export default function App({ Component, pageProps }) {
   );
 }
 
+MyApp.getInitialProps = async (appContext) => {
+  const blogCategory = await paginateBlogCategory({});
+  let appProps = {};
+  if (typeof appContext.Component.getInitialProps === "function") {
+    appProps = await appContext.Component.getInitialProps(appContext.ctx);
+  }
+
+  // Merge menus and offerHeader into pageProps
+  return {
+    ...appProps,
+    pageProps: {
+      ...(appProps.pageProps || {}),
+      blogCategory: blogCategory.list || [],
+    },
+  };
+};
+
+export default MyApp;

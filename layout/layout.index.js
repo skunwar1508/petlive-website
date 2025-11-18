@@ -18,7 +18,8 @@ const poppins = Poppins({
     display: "swap",
 });
 
-const Layout = ({ children }) => {
+const Layout = ({ children, pageProps }) => {
+    console.log("Layout pageProps:", pageProps);
     return (
         <>
             <div className={`${fredoka.variable} ${poppins.variable}`}>
@@ -26,7 +27,7 @@ const Layout = ({ children }) => {
                 <main>
                     {children}
                 </main>
-                <Footer />
+                <Footer blogCategory={pageProps?.blogCategory || []} />
             </div>
         </>
     )

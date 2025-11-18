@@ -1,109 +1,41 @@
-import Head from "next/head";
 
-import { useEffect, useState, useCallback } from "react";
-import authAxios from "@/services/authAxios";
-import common from "@/services/common";
-import PageModule from "@/components/pagination/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
-import UnauthAxios from "@/services/unauthAxios";
+import { paginateBlog } from "@/utils/serverApi";
+import BlogList from "@/components/blog/blogList";
+import { useRouter } from "next/router";
 
-export default function Blogs() {
+export default function Blogs({ initialPaginData }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const page = parseInt(searchParams.get("page")) || 1;
-  const searchString = searchParams.get("searchString") || "";
 
-  const [paginData, setPaginData] = useState({
-    list: [],
-    activePage: page,
-    itemsCountPerPage: 10,
-    totalItemsCount: 0,
-  });
-
-  const getData = useCallback(async () => {
-    common.loader(true);
-    try {
-      const res = await UnauthAxios({
-        method: "POST",
-        url: `/blog/paginate`,
-        data: {
-          page,
-          search: searchString,
-        },
-      });
-      setPaginData((prev) => ({
-        ...prev,
-        list: res?.data?.data || [],
-        activePage: page,
-        totalItemsCount: res?.data?.totalCount || 0,
-      }));
-    } catch (error) {
-      common.error(error);
-    }
-    common.loader(false);
-  }, [page, searchString]);
-
-  useEffect(() => {
-    getData();
-  }, [getData]);
 
   const pageHasChanged = (pageNumber) => {
     if (pageNumber !== paginData.activePage) {
       router.push(
         `/blogs?page=${pageNumber}${
           searchString ? `&searchString=${searchString}` : ""
-        }`
+        }${category ? `&category=${category}` : ""}`
       );
     }
   };
 
   return (
     <>
-      <section className="page-section all-blogs">
-        <h1 className="heading-secondary">Blogs</h1>
-        <div className="container">
-          <div className="row g-4">
-            <div className="col-lg-12 d-flex flex-column gap-3">
-              {paginData?.list?.length > 0 ? (
-                paginData?.list?.map((blog, index) => (
-                  <Link
-                    href={`/blogs/${blog?._id}/${blog?.slug}`}
-                    key={index}
-                    className="blog-card  "
-                  >
-                    <img
-                      src={
-                        blog?.coverImage?.path || "/assets/images/default.png"
-                      }
-                      alt={blog?.title}
-                      className=" img-fluid"
-                    />
-                    <div className="blog-text">
-                      <h5>{blog?.title}</h5>
-                      <p>{common.truncateAndClean(blog?.content, 100)}</p>
-                    </div>
-                  </Link>
-                ))
-              ) : (
-                <p>No blogs available</p>
-              )}
-              {paginData?.list?.length > 0 && (
-                <div className="d-flex justify-content-center mt-4">
-                  <PageModule
-                    totalItems={paginData.totalItemsCount}
-                    itemsPerPage={paginData.itemsCountPerPage}
-                    currentPage={paginData.activePage}
-                    range={3}
-                    theme="paging-4"
-                    pageChange={pageHasChanged}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+      <BlogList initialPaginData={initialPaginData} pageHasChanged={pageHasChanged} />
     </>
   );
+}
+
+
+export async function getServerSideProps(context) {
+  const paginData = await paginateBlog({
+    page: context.query.page || 1,
+    perPage: 10,
+    searchString: context.query.searchString || "",
+    category: context.query.category || "",
+  });
+
+  return {
+    props: {
+      initialPaginData: paginData,
+    },
+  };
 }

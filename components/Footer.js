@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Footer = () => {
+const Footer = ({blogCategory}) => {
   const blogCategories = [
     "Health",
     "Training",
@@ -40,13 +40,12 @@ const Footer = () => {
             <div className="footer-group">
               <h5 className="footer-heading">Blog Categories</h5>
               <ul className="footer-links list-unstyled">
-                {blogCategories.map((cat) => {
-                  const slug = cat.toLowerCase().replace(/\s+/g, "-");
+                {blogCategory?.map((cat) => {
                   return (
                     <li key={cat}>
-                      <Link href={`/blog/category/${encodeURIComponent(slug)}`}>
-                        <span className="category-pill" aria-label={`Category ${cat}`}>
-                          {cat}
+                      <Link href={`/blogs?category=${cat?.slug}`}>
+                        <span className="category-pill" aria-label={`Category ${cat?.name}`}>
+                          {cat?.name}
                         </span>
                       </Link>
                     </li>

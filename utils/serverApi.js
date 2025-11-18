@@ -96,3 +96,109 @@ export const paginateCommunity = async ({ page = 1, perPage = 10, searchString =
         };
     }
 };
+
+export const paginateBlogCategory = async ({ page = 1, perPage = 10, category="", searchString = "" }, token = null) => {
+    try {
+        let url = `${ROOT_URL}/blog/category/paginate`;
+        let body = { page, perPage, category, searchString };
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["X-Access-Token"] = token;
+        }
+        const res = await fetch(url, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body),
+        });
+        const json = await res.json();
+
+        return {
+            list: json?.data || [],
+            totalCount: json?.totalCount || 0,
+            activePage: page,
+        };
+    } catch (error) {
+        console.error("Server side fetch error:", error);
+        return {
+            list: [],
+            totalCount: 0,
+            activePage: page,
+        };
+    }
+};
+export const paginateBlog = async ({ page = 1, perPage = 10, category="", searchString = "" }, token = null) => {
+    try {
+        let url = `${ROOT_URL}/blog/paginate`;
+        let body = { page, perPage, searchString };
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["X-Access-Token"] = token;
+        }
+        const res = await fetch(url, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body),
+        });
+        const json = await res.json();
+
+        return {
+            list: json?.data || [],
+            totalCount: json?.totalCount || 0,
+            activePage: page,
+        };
+    } catch (error) {
+        console.error("Server side fetch error:", error);
+        return {
+            list: [],
+            totalCount: 0,
+            activePage: page,
+        };
+    }
+};
+export const getBlogById = async (blogId, token = null) => {
+    try {
+        const url = `${ROOT_URL}/blog/get/${blogId}`;
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["X-Access-Token"] = token;
+        }
+        const res = await fetch(url, {
+            method: "GET",
+            headers,
+        });
+        const json = await res.json();
+
+        return {
+            data: json?.data || {},
+        };
+    } catch (error) {
+        console.error("Server side fetch error:", error);
+        return {
+            data: {},
+        };
+    }
+};
+
+export const getRelatedBlogs = async (blogId, token = null) => {
+    try {
+        const url = `${ROOT_URL}/blog/related/${blogId}`;
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["X-Access-Token"] = token;
+        }
+        const res = await fetch(url, {
+            method: "GET",
+            headers,
+        });
+        const json = await res.json();
+
+        return {
+            data: json?.data || [],
+        };
+    } catch (error) {
+        console.error("Server side fetch error:", error);
+        return {
+            data: [],
+        };
+    }
+};

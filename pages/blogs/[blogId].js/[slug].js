@@ -8,28 +8,16 @@ import Moment from "react-moment";
 import common from "@/services/common";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { getBlogById } from "@/utils/serverApi";
 const DateFormate = dynamic(() => import("@/components/DateFormate"), {
   ssr: false,
 });
 
-export default function BlogDetail() {
-  const [blogDetails, setBlogDetails] = useState({});
+export default function BlogDetail({ blogDetails, blogId }) {
   const [recentBlogs, setRecentBlogs] = useState([]);
   const params = useParams() || {};
-  const blogId = params.blogId;
 
-  useEffect(() => {
-    // Fetch blog details based on slug or ID
-    const fetchBlogDetails = async () => {
-      try {
-        const { data } = await authAxios.get(`/blog/get/${blogId}`);
-        setBlogDetails(data?.data || {});
-      } catch (error) {
-        console.error("Error fetching blog details:", error);
-      }
-    };
-    if (blogId) fetchBlogDetails();
-  }, [blogId]);
+
   const getData = async () => {
     common.loader(true);
     try {
@@ -47,8 +35,10 @@ export default function BlogDetail() {
     common.loader(false);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     getData();
+    // const res = await getBlogById(blogId);
+    // console.log("Fetched Blog Data:", res);
   }, []);
 
   return (
@@ -109,4 +99,15 @@ export default function BlogDetail() {
       </section>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { data } = await getBlogById(context.params.blogId);
+
+  return {
+    props: {
+      blogDetails: data || {},
+      blogId: context.params.blogId,
+    },
+  };
 }

@@ -13,6 +13,7 @@ import { useAppContext } from "@/context/context";
 
 export default function CommunityInfo({ communityDetails }) {
   const { isLoggedIn, setShowAskLogin } = useAppContext();
+  const router = useRouter();
   console.log("communityDetails", communityDetails);
 
   const JoinedCommunity = () => {

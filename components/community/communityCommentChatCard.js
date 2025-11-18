@@ -117,7 +117,7 @@ const CommunityCommentChatCard = ({ data, hideComment }) => {
               </h4>
             )}
             {authorRole === "patient" && (
-              <h4>{authorDetails?.fullName || "Patient Name"} </h4>
+              <h4>{authorDetails?.name || "Patient Name"} </h4>
             )}
             {authorRole === "admin" && <h4>Admin</h4>}
           </Fragment>

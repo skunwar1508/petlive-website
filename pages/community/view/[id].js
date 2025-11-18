@@ -34,6 +34,7 @@ const CommunityView = ({ communityDetails }) => {
 };
 
 export async function getServerSideProps(context) {  // read cookies from request and parse to get token
+  // Get token from cookies on server side
   const cookieHeader = context.req?.headers?.cookie || "";
   const cookies = cookieHeader
     .split(";")
@@ -43,13 +44,13 @@ export async function getServerSideProps(context) {  // read cookies from reques
       acc[k.trim()] = decodeURIComponent((v || []).join("=").trim());
       return acc;
     }, {});
-  // common cookie names used for tokens; adjust as needed
+  // Try common cookie names for token
   const token = cookies.token || cookies.authToken || cookies.access_token || cookies.jwt || "";
   const {data} = await fetchCommunityDetails(context, token);
 
   return {
     props: {
-      communityDetails: data,
+      communityDetails: data
     }
   }
 }

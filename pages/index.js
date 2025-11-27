@@ -1,6 +1,3 @@
-import Head from "next/head";
-
-import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 
 import { Fredoka } from "next/font/google";
@@ -9,9 +6,7 @@ import TrustBadges from "@/components/TrustBadges";
 import FamousSection from "@/components/FamousSection";
 import ServicesSection from "@/components/ServicesSection";
 import BlogSection from "@/components/BlogSection";
-import Footer from "@/components/Footer";
 import DiscoverSection from "@/components/DiscoverSection";
-import ROOT_URL from "@/services/api-url";
 import { communityPaging, fetchTopFeaturedBlogs } from "@/utils/serverApi";
 import FaqSection from "@/components/faqs/homeFaqs";
 
@@ -32,6 +27,7 @@ const poppins = Poppins({
 export default function Home({ discoverData, blogData }) {
   return (
     <>
+    {/* <Header /> */}
       <HeroSection />
       <ServicesSection />
       <DiscoverSection discoverData={discoverData} />

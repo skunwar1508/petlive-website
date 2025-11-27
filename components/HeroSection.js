@@ -23,9 +23,9 @@ export default function HeroSection() {
                 <br /> Care & Community
               </h1>
               <p>
-                India’s first all-in-one platform to consult vets online,
-                <br /> join pet lover communities,
-                <br /> and even find your pet’s perfect playdate.
+                Welcome to FurrBaby - India’s first all-in-one platform created for pets and the humans who adore them. <br/>
+From expert online vet consultations to amazing pet community spaces and joyful playdate discovery, we bring every pet parent closer to worry-free care, trusted guidance, and real connections.
+
               </p>
               <div className="btns-container">
                 <button

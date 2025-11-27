@@ -31,15 +31,23 @@ const ServicesSection = () => {
   const items = [
     {
       title: "Community",
-      desc: "Connect with thousands of pet parents, share experiences, get advice, and build lasting friendships in our caring community.",
+      desc: "Join thousands of passionate pet parents in India’s most unique pet community. Share real experiences, ask questions, and get genuine support from like-minded animal lovers. Whether you have a dog, cat, bird, or exotic pet, you'll find meaningful friendships, trusted guidance, and a space where every pet story matters.",
     },
     {
       title: "Expert Blog",
-      desc: "Access expert advice, tips, and stories from veterinarians and experienced pet owners to give your pets the best care.",
+      desc: "Unlock valuable pet care insights and learn from professionals who know pets best. Our Expert Blog brings you practical advice, wellness tips, behavior guides, nutrition insights, and real-life stories from experienced veterinarians and pet owners. Each blog helps you better understand your pet, confidently nurture them, and build a happier life together.",
     },
     {
       title: "Veterinary Service",
-      desc: "Round-the-clock access to professional veterinary consultations and emergency care for your beloved pets.",
+      desc: "Your pet’s health should never wait. Our platform provides 24/7 online vet consultation in India, connecting you with certified veterinary professionals instantly. Whether you need routine advice, medical assistance, or urgent care, our experts provide reliable guidance anytime, anywhere—so your beloved companion is always in safe hands.",
+    },
+    {
+      title: "Discover Pet Communities",
+      desc: "Explore creative pet communities built around what truly matters to you and your furry friends. Join specialized groups based on your pet type, hobbies, routines, and even your location—so you can connect with pet parents who understand your lifestyle.",
+    },
+    {
+      title: "Make Your Pet Famous",
+      desc: "Create a free digital scrapbook to celebrate your pet’s quirks, adventures, and secret talents—because every pet care moment deserves love and the spotlight.",
     },
   ];
 

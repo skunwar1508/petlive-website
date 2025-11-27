@@ -1693,3 +1693,8 @@ width: 100px;
     height: auto;
     margin-bottom: 20px;
 }
+.famous-img {
+    position: sticky;
+    top: 100px;
+    height: max-content;
+}

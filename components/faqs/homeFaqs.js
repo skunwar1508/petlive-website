@@ -32,7 +32,8 @@ const FaqSection = ({ isHome, totalCounts }) => {
   const visibleFaqs = typeof totalCounts === "number" ? faqs.slice(0, totalCounts) : faqs;
 
   return (
-    <section className="blog-section">
+    <section className="blog-section famous-section bg-paw-img">
+      <span className="third-bg"></span>
       <div className="container">
         <h2 className="heading-secondary">FAQs</h2>
 

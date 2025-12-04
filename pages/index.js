@@ -71,9 +71,9 @@ export default function Home({ discoverData, blogData }) {
       <DiscoverSection discoverData={discoverData} />
       {/* <TrustBadges /> */}
       <BlogSection blogData={blogData} />
+      <AskVet />
       <FamousSection />
       <FaqSection isHome={true} totalCounts={5} />
-      <AskVet />
     </>
   );
 }

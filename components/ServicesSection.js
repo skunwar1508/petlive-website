@@ -41,14 +41,14 @@ const ServicesSection = () => {
       title: "Veterinary Service",
       desc: "Your pet’s health should never wait. Our platform provides 24/7 online vet consultation in India, connecting you with certified veterinary professionals instantly. Whether you need routine advice, medical assistance, or urgent care, our experts provide reliable guidance anytime, anywhere—so your beloved companion is always in safe hands.",
     },
-    {
-      title: "Discover Pet Communities",
-      desc: "Explore creative pet communities built around what truly matters to you and your furry friends. Join specialized groups based on your pet type, hobbies, routines, and even your location—so you can connect with pet parents who understand your lifestyle.",
-    },
-    {
-      title: "Make Your Pet Famous",
-      desc: "Create a free digital scrapbook to celebrate your pet’s quirks, adventures, and secret talents—because every pet care moment deserves love and the spotlight.",
-    },
+    // {
+    //   title: "Discover Pet Communities",
+    //   desc: "Explore creative pet communities built around what truly matters to you and your furry friends. Join specialized groups based on your pet type, hobbies, routines, and even your location—so you can connect with pet parents who understand your lifestyle.",
+    // },
+    // {
+    //   title: "Make Your Pet Famous",
+    //   desc: "Create a free digital scrapbook to celebrate your pet’s quirks, adventures, and secret talents—because every pet care moment deserves love and the spotlight.",
+    // },
   ];
 
   return (

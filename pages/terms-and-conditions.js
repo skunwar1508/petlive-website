@@ -12,9 +12,6 @@ const TermsConditions = () => {
         <div class="container">
           <div class="text-center mb-4">
             <h1 className="heading-secondary">Terms and Conditions</h1>
-            <p class="text-muted">
-              Effective Date: <strong>[Insert Date]</strong>
-            </p>
           </div>
 
           <div class="content">

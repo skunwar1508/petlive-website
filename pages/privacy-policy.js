@@ -12,9 +12,7 @@ const PrivacyPolicy = () => {
         <div class="container">
           <div class="text-center mb-4">
             <h1 className="heading-secondary">Privacy Policy</h1>
-            <p class="text-muted">
-              Effective Date: <strong>[Insert Date]</strong>
-            </p>
+            
           </div>
 
           <div class="content">

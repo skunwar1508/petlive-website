@@ -81,14 +81,44 @@ const ContactUs = () => {
     }
   };
 
+  const metaTags = {
+    title: "Contact Furr Baby for Support & Pet Care Assistance",
+    description: "Reach out to Furr Baby for queries, support, or pet care assistance. Our team is here to help you with community, services, and general information.",
+    keywords: "pet community, dog lovers, cat lovers, pet care, pet health, pet tips, furr baby",
+    ogUrl: "https://www.furrbaby.in/",
+    ogType: "website",
+    ogTitle: "Contact Furr Baby for Support & Pet Care Assistance",
+    ogDescription: "Reach out to Furr Baby for queries, support, or pet care assistance. Our team is here to help you with community, services, and general information.",
+    ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
+    twitterCard: "summary_large_image",
+    twitterDomain: "furrbaby.in",
+    twitterUrl: "https://www.furrbaby.in/",
+    twitterTitle: "Contact Furr Baby for Support & Pet Care Assistance",
+    twitterDescription: "Reach out to Furr Baby for queries, support, or pet care assistance. Our team is here to help you with community, services, and general information.",
+    twitterImage: "https://www.furrbaby.in/furr_baby_logo.svg",
+  };
+
   return (
     <>
       <Head>
-        <title>Contact Us</title>
-        <meta
-          name="description"
-          content="Contact Furr Baby for support or queries"
-        />
+        <title>{metaTags.title}</title>
+        <meta name="title" content={metaTags.title} />
+        <meta name="description" content={metaTags.description} />
+        <meta name="keywords" content={metaTags.keywords} />
+        {/* Facebook Meta Tags */}
+        <meta property="og:url" content={metaTags.ogUrl} />
+        <meta property="og:type" content={metaTags.ogType} />
+        <meta property="og:title" content={metaTags.ogTitle} />
+        <meta property="og:description" content={metaTags.ogDescription} />
+        <meta property="og:image" content={metaTags.ogImage} />
+
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content={metaTags.twitterCard} />
+        <meta property="twitter:domain" content={metaTags.twitterDomain} />
+        <meta property="twitter:url" content={metaTags.twitterUrl} />
+        <meta name="twitter:title" content={metaTags.twitterTitle} />
+        <meta name="twitter:description" content={metaTags.twitterDescription} />
+        <meta name="twitter:image" content={metaTags.twitterImage} />
       </Head>
 
       <section className="page-section  text-page-ui py-5">

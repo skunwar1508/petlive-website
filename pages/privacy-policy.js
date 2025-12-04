@@ -2,17 +2,49 @@ import Head from "next/head";
 import React from "react";
 
 const PrivacyPolicy = () => {
+  const metaTags = {
+    title: "Furr Baby Privacy Policy – Your Data & Safety Matters",
+    description: "Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform.",
+    keywords: "pet community, dog lovers, cat lovers, pet care, pet health, pet tips, furr baby",
+    ogUrl: "https://www.furrbaby.in/",
+    ogType: "website",
+    ogTitle: "Furr Baby Privacy Policy – Your Data & Safety Matters",
+    ogDescription: "Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform.",
+    ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
+    twitterCard: "summary_large_image",
+    twitterDomain: "furrbaby.in",
+    twitterUrl: "https://www.furrbaby.in/",
+    twitterTitle: "Furr Baby Privacy Policy – Your Data & Safety Matters",
+    twitterDescription: "Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform.",
+    twitterImage: "https://www.furrbaby.in/furr_baby_logo.svg",
+  };
   return (
     <>
       <Head>
-        <title>Privacy Policy</title>
-        <meta name="description" content="Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform." />
+        <title>{metaTags.title}</title>
+        <meta name="title" content={metaTags.title} />
+        <meta name="description" content={metaTags.description} />
+        <meta name="keywords" content={metaTags.keywords} />
+        {/* Facebook Meta Tags */}
+        <meta property="og:url" content={metaTags.ogUrl} />
+        <meta property="og:type" content={metaTags.ogType} />
+        <meta property="og:title" content={metaTags.ogTitle} />
+        <meta property="og:description" content={metaTags.ogDescription} />
+        <meta property="og:image" content={metaTags.ogImage} />
+
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content={metaTags.twitterCard} />
+        <meta property="twitter:domain" content={metaTags.twitterDomain} />
+        <meta property="twitter:url" content={metaTags.twitterUrl} />
+        <meta name="twitter:title" content={metaTags.twitterTitle} />
+        <meta name="twitter:description" content={metaTags.twitterDescription} />
+        <meta name="twitter:image" content={metaTags.twitterImage} />
       </Head>
       <section class="page-section text-page-ui py-5">
         <div class="container">
           <div class="text-center mb-4">
             <h1 className="heading-secondary">Privacy Policy</h1>
-            
+
           </div>
 
           <div class="content">

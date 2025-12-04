@@ -61,22 +61,7 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <Head>
         <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="keywords" content={seo.keywords} />
-        {/* Facebook Meta Tags */}
-        <meta property="og:url" content="https://www.furrbaby.in/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Furr Join Pet Community for Dog and Cat Lovers | Furr Baby" />
-        <meta property="og:description" content="India’s first all-in-one platform to consult vets online, join pet lover communities, and even find your pet’s perfect playdate." />
-        <meta property="og:image" content="https://www.furrbaby.in/furr_baby_logo.svg" />
-
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="furrbaby.in" />
-        <meta property="twitter:url" content="https://www.furrbaby.in/" />
-        <meta name="twitter:title" content="Furr Join Pet Community for Dog and Cat Lovers | Furr Baby" />
-        <meta name="twitter:description" content="India’s first all-in-one platform to consult vets online, join pet lover communities, and even find your pet’s perfect playdate." />
-        <meta name="twitter:image" content="https://www.furrbaby.in/furr_baby_logo.svg" />
+        
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="P_5TvA14QVBk3MgvQszjgETAy86YzQz3TQ_zGfPkBW8" />

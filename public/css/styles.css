@@ -79,7 +79,9 @@ img {
 .btn:active {
   transform: translateY(0);
 }
-
+.text-theme {
+  color: var(--primary-color) ;
+}
 .btn-check:checked+.btn,
 .btn.active,
 .btn.show,

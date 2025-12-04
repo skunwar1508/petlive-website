@@ -162,7 +162,7 @@ const PrivacyPolicy = () => {
               <p>
                 This Privacy Policy is governed by the laws of India. Any
                 disputes shall be subject to the exclusive jurisdiction of
-                courts located in <strong>[Your City]</strong>, India.
+                courts located in <strong>Jaipur</strong>, India.
               </p>
             </div>
             <div className="content-box">
@@ -175,10 +175,6 @@ const PrivacyPolicy = () => {
                 <li>
                   📧 <strong>Email:</strong>{" "}
                   <a href="mailto:support@furrbaby.in">support@furrbaby.in</a>
-                </li>
-                <li>
-                  🏢 <strong>Address:</strong> [Insert registered office
-                  address]
                 </li>
               </ul>
             </div>

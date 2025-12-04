@@ -71,8 +71,8 @@ const Footer = ({blogCategory}) => {
               <ul className="footer-links list-unstyled">
                 <li><Link href="/blogs">Blog</Link></li>
                 <li><Link href="/faqs">FAQ</Link></li>
-                <li><Link href="/care-guides">Care Guides</Link></li>
-                <li><Link href="/testimonials">Testimonials</Link></li>
+                {/* <li><Link href="/care-guides">Care Guides</Link></li>
+                <li><Link href="/testimonials">Testimonials</Link></li> */}
               </ul>
             </div>
           </div>
@@ -85,15 +85,15 @@ const Footer = ({blogCategory}) => {
                 <Link href="#">
                   <img src="/images/f-facebook.svg" alt="Facebook Logo" />
                 </Link>
-                <Link href="#">
+                <Link href="https://www.instagram.com/furrbabycare/" target="_blank" rel="noopener noreferrer">
                   <img src="/images/f-insta.svg" alt="Instagram Logo" />
                 </Link>
-                <Link href="#">
+                {/* <Link href="#">
                   <img src="/images/f-linkedin.svg" alt="LinkedIn Logo" />
                 </Link>
                 <Link href="#">
                   <img src="/images/f-twitter.svg" alt="Twitter Logo" />
-                </Link>
+                </Link> */}
               </div>
             </div>
 

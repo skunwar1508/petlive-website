@@ -23,9 +23,6 @@ const TermsConditions = () => {
                   “us”, or “our”)
                 </li>
                 <li>
-                  <strong>Registered Address:</strong> [Insert Address]
-                </li>
-                <li>
                   <strong>Website:</strong>{" "}
                   <a
                     href="https://www.furrbaby.in"
@@ -204,7 +201,7 @@ const TermsConditions = () => {
                 These Terms shall be governed by and construed in accordance
                 with the laws of India. Any disputes shall be subject to the
                 exclusive jurisdiction of courts in
-                <strong>[Your City]</strong>, India.
+                <strong>Jaipur</strong>, India.
               </p>
             </div>
             <div className="content-box">
@@ -216,9 +213,6 @@ const TermsConditions = () => {
                 <li>
                   <strong>Email:</strong>{" "}
                   <a href="mailto:support@furrbaby.in">support@furrbaby.in</a>
-                </li>
-                <li>
-                  <strong>Address:</strong> [Insert company address here]
                 </li>
               </ul>
             </div>

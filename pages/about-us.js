@@ -6,7 +6,7 @@ const AboutUs = () => {
     <>
       <Head>
         <title>About Us</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Learn about Furr Baby’s mission, vision, and commitment to creating a trusted pet community with expert advice and support for dog and cat parents." />
       </Head>
       <section class="page-section text-page-ui py-5">
         <div class="container">

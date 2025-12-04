@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
     <>
       <Head>
         <title>Privacy Policy</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform." />
       </Head>
       <section class="page-section text-page-ui py-5">
         <div class="container">

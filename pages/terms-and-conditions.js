@@ -6,7 +6,7 @@ const TermsConditions = () => {
     <>
       <Head>
         <title>Terms Conditions</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Review Furr Baby’s Terms and Conditions to learn about user guidelines, platform usage rules, and important policies for a safe community experience." />
       </Head>
       <section class="page-section text-page-ui py-5">
         <div class="container">

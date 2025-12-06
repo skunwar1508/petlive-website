@@ -11,6 +11,7 @@ import { communityPaging, fetchTopFeaturedBlogs } from "@/utils/serverApi";
 import FaqSection from "@/components/faqs/homeFaqs";
 import AskVet from "@/components/askVetComp";
 import Head from "next/head";
+import PetJourney from "@/components/petJourney";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -72,7 +73,8 @@ export default function Home({ discoverData, blogData }) {
       {/* <TrustBadges /> */}
       <BlogSection blogData={blogData} />
       <AskVet />
-      <FamousSection />
+      {/* <FamousSection /> */}
+      <PetJourney />
       <FaqSection isHome={true} totalCounts={5} />
     </>
   );

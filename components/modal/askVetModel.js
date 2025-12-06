@@ -8,47 +8,38 @@ import UnauthAxios from "@/services/unauthAxios";
 import { ErrorMessage } from "../formik/errorMessage";
 import common from "@/services/common";
 import { useAppContext } from "@/context/context";
+import { toast } from "react-toastify";
 
 const AskVetModel = ({ show, onHide }) => {
     const [otpSent, setOtpSent] = useState(false);
     const { login, setShowRegister, setShowLogin } = useAppContext();
 
     const initialValues = {
+        petType: "Dog",
+        issue: "",
         name: "",
         phone: "",
-        email: "",
-        otp: "",
+        email: ""
     };
 
     const validationSchema = Yup.object({
+        petType: Yup.string().required("Pet type is required"),
         name: Yup.string().required("Name is required"),
         phone: Yup.string()
             .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
             .required("Phone is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
-        otp: Yup.string().length(4, "OTP must be 4 digits"),
+        issue: Yup.string().required("Issue is required"),
     });
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
-            if (values?.otp) {
-                const { data } = await UnauthAxios.post(
-                    "/patient/signup/web/verify",
-                    values
-                );
-                console.log("data", data);
-                common.success(data?.message || "Registration successful");
-                localStorage.setItem("token", data?.data?.token);
-                login(data?.data);
-                setOtpSent(false);
-                resetForm();
-                onHide();
-            } else {
-                const { data } = await UnauthAxios.post("/patient/signup/web", values);
-                setOtpSent(true);
-                formik.setFieldValue("otp", data?.data?.otpCode);
-                common.success(data?.message);
-            }
+            const res = await UnauthAxios.post("/inquiry/create", values, {
+                // Add any headers if needed
+            });
+            toast.success(res.data.message || "Inquiry submitted successfully");
+            resetForm();
+            onHide();
         } catch (error) {
             common.error(error);
         } finally {
@@ -98,14 +89,15 @@ const AskVetModel = ({ show, onHide }) => {
                                 <h4 className="text-theme mb-3">Pet Type</h4>
                                 <div className="petlebelgroup">
                                     <label className="pettypelabel">
-                                        <input type="radio" name="petType" value="Dog" />
+                                        <input type="radio" {...formik.getFieldProps("petType")} checked={formik.values.petType === "Dog"} value="Dog" />
                                         <span>Dog</span>
                                     </label>
                                     <label className="pettypelabel">
-                                        <input type="radio" name="petType" value="Cat" />
+                                        <input type="radio" {...formik.getFieldProps("petType")} checked={formik.values.petType === "Cat"} value="Cat" />
                                         <span>Cat</span>
                                     </label>
                                 </div>
+                                <ErrorMessage name="petType" formik={formik} />
 
                             </div>
                         </div>
@@ -119,6 +111,27 @@ const AskVetModel = ({ show, onHide }) => {
                             />
                             <ErrorMessage name="name" formik={formik} />
                         </div>
+                        <div className="mb-3">
+                            <input
+                                type="text"
+                                className="form-control modal-input"
+                                placeholder="Phone Number"
+                                name="phone"
+                                {...formik.getFieldProps("phone")}
+                            />
+                            <ErrorMessage name="phone" formik={formik} />
+                        </div>
+                        <div className="mb-3">
+                            <input
+                                type="text"
+                                className="form-control modal-input"
+                                placeholder="Email Address"
+                                name="email"
+                                {...formik.getFieldProps("email")}
+                            />
+                            <ErrorMessage name="email" formik={formik} />
+                        </div>
+                        
                         <div className="mb-3">
                             <textarea
                                 className="form-control modal-input"

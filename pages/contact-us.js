@@ -4,6 +4,8 @@ import { Formik, Form as FormikForm } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import UnauthAxios from "@/services/unauthAxios";
+import { useFormik } from "formik";
 // import PhoneInput from "react-phone-input-2";
 // import "react-phone-input-2/lib/style.css";
 
@@ -12,27 +14,19 @@ import { toast } from "react-toastify";
  * import authAxios from "@/services/authAxios";
  * and use authAxios.post(...) in handleSubmit.
  */
-const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "", // set in env if needed
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 const ContactUs = () => {
   const initialValues = {
     name: "",
     email: "",
-    countryCode: "+91",
-    phoneNumber: "",
+    phone: "",
     message: "",
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    countryCode: Yup.string().required("Country Code is required"),
-    phoneNumber: Yup.string()
+    phone: Yup.string()
       .required("Phone number is required")
       .matches(/^[0-9]+$/, "Only digits are allowed")
       .test("valid-phone-number", function (value) {
@@ -62,8 +56,7 @@ const ContactUs = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // If you have authAxios, replace axiosInstance with authAxios
-      const res = await axiosInstance.post("/connect/contact-us", values, {
+      const res = await UnauthAxios.post("/contact/create", values, {
         // Add any headers if needed
       });
 
@@ -80,6 +73,12 @@ const ContactUs = () => {
       setSubmitting(false);
     }
   };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
 
   return (
     <>
@@ -113,135 +112,81 @@ const ContactUs = () => {
             </div>
 
             <div className="contact-us-form" style={{ flex: "1 1 300px" }}>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-              >
-                {({
-                  values,
-                  handleChange,
-                  handleBlur,
-                  setFieldValue,
-                  touched,
-                  errors,
-                  isSubmitting,
-                }) => (
-                  <FormikForm noValidate>
-                    {/* Name */}
-                    <div className=" mb-3">
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={values.name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className="modal-input form-control"
-                      />
-                      {touched.name && errors.name && (
-                        <div className="errorMsg">{errors.name}</div>
-                      )}
-                    </div>
+              <form noValidate onSubmit={formik.handleSubmit}>
+                {/* Name */}
+                <div className=" mb-3">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="modal-input form-control"
+                  />
+                  {formik.touched.name && formik.errors.name && (
+                    <div className="errorMsg">{formik.errors.name}</div>
+                  )}
+                </div>
 
-                    {/* Email */}
-                    <div className=" mb-3">
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className="modal-input form-control"
-                      />
-                      {touched.email && errors.email && (
-                        <div className="errorMsg">{errors.email}</div>
-                      )}
-                    </div>
+                {/* Email */}
+                <div className=" mb-3">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="modal-input form-control"
+                  />
+                  {formik.touched.email && formik.errors.email && (
+                    <div className="errorMsg">{formik.errors.email}</div>
+                  )}
+                </div>
 
-                    {/* Phone */}
-                    <div className=" phone-code-bar mb-3">
-                      <input
-                        type="text"
-                        name="mobile"
-                        placeholder="Mobile Number"
-                        value={values.name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className="modal-input form-control"
-                      />
-                      {/* <PhoneInput
-                        country={"in"}
-                        value={values.countryCode + values.phoneNumber}
-                        countryCodeEditable={false}
-                        onChange={(phone, countryData) => {
-                          const dialCode = countryData?.dialCode || "91";
-                          // remove dialCode from start of phone string if present
-                          let local = phone;
-                          const dialStr = String(dialCode);
-                          // phone may contain leading + or not, normalize
-                          local = local.replace(/\+/g, "");
-                          if (local.startsWith(dialStr)) {
-                            local = local.slice(dialStr.length);
-                          }
-                          // remove any non-digit chars
-                          local = local.replace(/\D/g, "");
-                          setFieldValue("phoneNumber", local);
-                          setFieldValue("countryCode", `+${dialStr}`);
-                        }}
-                        onBlur={() => {}}
-                        inputProps={{
-                          name: "phone",
-                          required: true,
-                          className: "modal-input form-control",
-                        }}
-                        inputClass="w-100"
-                      /> */}
-                      {touched.phoneNumber && errors.phoneNumber && (
-                        <div className="errorMsg">{errors.phoneNumber}</div>
-                      )}
-                      {/* Hidden fields to keep Formik state in sync (optional) */}
-                      {/* <input
-                        type="hidden"
-                        name="countryCode"
-                        value={values.countryCode}
-                      />
-                      <input
-                        type="hidden"
-                        name="phoneNumber"
-                        value={values.phoneNumber}
-                      /> */}
-                    </div>
+                {/* Phone */}
+                <div className=" phone-code-bar mb-3">
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="Mobile Number"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="modal-input form-control"
+                  />
+                  {formik.touched.phone && formik.errors.phone && (
+                    <div className="errorMsg">{formik.errors.phone}</div>
+                  )}
+                </div>
 
-                    {/* Message */}
-                    <div className=" mb-4">
-                      <textarea
-                        rows={6}
-                        name="message"
-                        placeholder="Reason"
-                        value={values.message}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className="modal-input form-control"
-                      />
-                      {touched.message && errors.message && (
-                        <div className="errorMsg">{errors.message}</div>
-                      )}
-                    </div>
+                {/* Message */}
+                <div className=" mb-4">
+                  <textarea
+                    rows={6}
+                    name="message"
+                    placeholder="Reason"
+                    value={formik.values.message}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="modal-input form-control"
+                  />
+                  {formik.touched.message && formik.errors.message && (
+                    <div className="errorMsg">{formik.errors.message}</div>
+                  )}
+                </div>
 
-                    <div>
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="cta-btn w-100"
-                      >
-                        {isSubmitting ? "Sending..." : "Send"}
-                      </button>
-                    </div>
-                  </FormikForm>
-                )}
-              </Formik>
+                <div>
+                  <button
+                    type="submit"
+                    disabled={formik.isSubmitting}
+                    className="cta-btn w-100"
+                  >
+                    {formik.isSubmitting ? "Sending..." : "Send"}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

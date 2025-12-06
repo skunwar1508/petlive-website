@@ -61,8 +61,8 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <Head>
         <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="keywords" content={seo.keywords} />
+        
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="P_5TvA14QVBk3MgvQszjgETAy86YzQz3TQ_zGfPkBW8" />
         <link rel="icon" href="/favicon.ico" />

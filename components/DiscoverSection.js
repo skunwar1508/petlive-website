@@ -13,11 +13,11 @@ const DiscoverSection = ({discoverData}) => {
       <div className="container">
         <div className="section-heading text-center mb-5">
           <h2 className="heading-secondary">
-            Discover Pet Communities That Match Your Interests
+            Discover Pet Communities That Match Your Interests
           </h2>
           <h6>
-            Join specialized communities based on your pet type, interests, and
-            location. Find your perfect match among our diverse pet parent groups.
+            Join a creative pet community built around what truly matters to you and your furry friends.
+Explore specialized groups based on your pet type, hobbies, routines, and even your location - so you can connect with pet parents who understand your lifestyle.
           </h6>
         </div>
         <div className="row justify-content-center g-4">

@@ -1,10 +1,9 @@
-"use client";
 import { useRouter } from "next/navigation";
 
 const FamousSection = () => {
   const router = useRouter();
   return (
-    <section className="famous-section bg-paw-img">
+    <section className="blog-section">
       <span className="third-bg"></span>
       <div className="container">
         <div className="row justify-content-center">

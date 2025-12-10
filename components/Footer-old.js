@@ -37,7 +37,7 @@ const Footer = () => {
             </Link>
             <Link href="#" className="contact-links">
               <img src="/images/mail-logo.svg" className="me-2" />{" "}
-              abc@furrbaby.com
+              support@furrbaby.in
             </Link>
           </div>
 

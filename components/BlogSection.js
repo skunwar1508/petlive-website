@@ -22,7 +22,7 @@ const BlogSection = ({ blogData }) => {
                   key={index}
                 >
                   <Link
-                    href={`/blogs/view/${blog?._id}-${blog?.slug}`}
+                    href={`/blogs/${blog?.categoryId?.name}/${blog?.slug}`}
                     className="blog-card large-card"
                   >
                     <img

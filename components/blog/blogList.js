@@ -13,10 +13,11 @@ const BlogList = ({ initialPaginData, pageHasChanged }) => {
               {initialPaginData?.list?.length > 0 ? (
                 initialPaginData?.list.map((blog, index) => (
                   <Link
-                    href={`/blogs/view/${blog?._id}-${blog?.slug}`}
+                    href={`/blogs/${blog?.categoryId?.name}/${blog?.slug}`}
                     key={index}
                     className="blog-card  "
                   >
+                    {console.log(blog?.categoryId?.name)}
                     <img
                       src={
                         blog?.coverImage?.path || "/assets/images/default.png"

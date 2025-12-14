@@ -3,7 +3,7 @@ import authAxios from "@/services/authAxios";
 import common from "@/services/common";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { getBlogById } from "@/utils/serverApi";
+import { getBlogById, getBlogBySlug } from "@/utils/serverApi";
 const DateFormate = dynamic(() => import("@/components/DateFormate"), {
   ssr: false,
 });
@@ -73,7 +73,7 @@ export default function BlogDetail({ blogDetails }) {
             <div className="col-lg-4 ">
               <h3 className="heading-tertiary">Recent Blogs</h3>
               {recentBlogs?.map((blog, index) => (
-                <Link href={`/blogs/view/${blog?._id}-${blog?.slug}`} key={index}>
+                <Link href={`/blogs/${blog?.categoryId?.name}/${blog?.slug}`} key={index}>
                   <div className="blog-card small-card ">
                     <img
                       src={
@@ -98,7 +98,7 @@ export default function BlogDetail({ blogDetails }) {
 }
 
 export async function getServerSideProps(context) {
-  const { data } = await getBlogById(context.params.slug.split('-')[0]);
+  const { data } = await getBlogBySlug(context.params.slug);
 
   return {
     props: {

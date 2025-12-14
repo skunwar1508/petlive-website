@@ -178,6 +178,29 @@ export const getBlogById = async (blogId, token = null) => {
         };
     }
 };
+export const getBlogBySlug = async (slug, token = null) => {
+    try {
+        const url = `${ROOT_URL}/blog/get-by-slug/${slug}`;
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["X-Access-Token"] = token;
+        }
+        const res = await fetch(url, {
+            method: "GET",
+            headers,
+        });
+        const json = await res.json();
+
+        return {
+            data: json?.data || {},
+        };
+    } catch (error) {
+        console.error("Server side fetch error:", error);
+        return {
+            data: {},
+        };
+    }
+};
 
 export const getRelatedBlogs = async (blogId, token = null) => {
     try {

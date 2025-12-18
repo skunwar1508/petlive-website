@@ -26,7 +26,7 @@ export default function Blogs({ initialPaginData }) {
     ogDescription: "Explore Furr Baby blogs for expert pet care tips, training guides, health advice, and helpful insights for dog and cat parents.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "Pet Care Blogs & Tips for Pet Parents | Furr Baby",
     twitterDescription: "Explore Furr Baby blogs for expert pet care tips, training guides, health advice, and helpful insights for dog and cat parents.",

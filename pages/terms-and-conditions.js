@@ -12,7 +12,7 @@ const TermsConditions = () => {
     ogDescription: "Review Furr Baby’s Terms and Conditions to learn about user guidelines, platform usage rules, and important policies for a safe community experience.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "Furr Baby Terms & Conditions – User Guidelines",
     twitterDescription: "Review Furr Baby’s Terms and Conditions to learn about user guidelines, platform usage rules, and important policies for a safe community experience.",

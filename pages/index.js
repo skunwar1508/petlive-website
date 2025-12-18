@@ -38,7 +38,7 @@ export default function Home({ discoverData, blogData }) {
     ogDescription: "Join the Furr Baby pet community to connect, share stories, get tips, and explore trusted guidance for your pet’s health, care, and daily well-being.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "Join Pet Community for Dog and Cat Lovers | Furr Baby",
     twitterDescription: "Join the Furr Baby pet community to connect, share stories, get tips, and explore trusted guidance for your pet’s health, care, and daily well-being.",

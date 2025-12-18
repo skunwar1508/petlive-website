@@ -43,7 +43,7 @@ const MyApp = ({ Component, pageProps }) => {
   }, []);
 
   const router = useRouter();
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://furrbaby.in";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.furrbaby.in";
   const canonicalPath = (typeof window === "undefined"
     ? pageProps?.asPath || router.asPath || "/"
     : window.location.pathname || "/"

@@ -13,7 +13,7 @@ const Faqs = () => {
     ogDescription: "Find quick answers to common questions about Furr Baby’s services, community features, pet care guidance, and support for pet parents.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "Furr Baby FAQs – Answers to Common Pet Care Queries",
     twitterDescription: "Find quick answers to common questions about Furr Baby’s services, community features, pet care guidance, and support for pet parents.",

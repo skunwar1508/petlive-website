@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
     ogDescription: "Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "Furr Baby Privacy Policy – Your Data & Safety Matters",
     twitterDescription: "Read the Furr Baby Privacy Policy to understand how we protect your information, ensure data safety, and maintain transparency across our platform.",

@@ -89,7 +89,7 @@ const ContactUs = () => {
     ogDescription: "Reach out to Furr Baby for queries, support, or pet care assistance. Our team is here to help you with community, services, and general information.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "Contact Furr Baby for Support & Pet Care Assistance",
     twitterDescription: "Reach out to Furr Baby for queries, support, or pet care assistance. Our team is here to help you with community, services, and general information.",

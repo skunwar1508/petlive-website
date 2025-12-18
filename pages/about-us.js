@@ -12,7 +12,7 @@ const AboutUs = () => {
     ogDescription: "Learn about Furr Baby’s mission, vision, and commitment to creating a trusted pet community with expert advice and support for dog and cat parents.",
     ogImage: "https://www.furrbaby.in/furr_baby_logo.svg",
     twitterCard: "summary_large_image",
-    twitterDomain: "furrbaby.in",
+    twitterDomain: "www.furrbaby.in",
     twitterUrl: "https://www.furrbaby.in/",
     twitterTitle: "About Furr Baby – Building a Caring Pet Community",
     twitterDescription: "Learn about Furr Baby’s mission, vision, and commitment to creating a trusted pet community with expert advice and support for dog and cat parents.",

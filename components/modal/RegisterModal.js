@@ -10,14 +10,16 @@ import common from "@/services/common";
 import { useAppContext } from "@/context/context";
 
 const RegisterModal = ({ show, onHide }) => {
-  const [otpSent, setOtpSent] = useState(false);
-  const { login, setShowRegister, setShowLogin } = useAppContext();
+  const { login, setShowRegister, setShowLogin, securityQuestions } = useAppContext();
 
   const initialValues = {
     name: "",
     phone: "",
     email: "",
-    otp: "",
+    securityQuestion: "",
+    securityAnswer: "",
+    password: "",
+    confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
@@ -26,29 +28,22 @@ const RegisterModal = ({ show, onHide }) => {
       .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
       .required("Phone is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    otp: Yup.string().length(4, "OTP must be 4 digits"),
+    securityQuestion: Yup.string().required("Security question is required"),
+    securityAnswer: Yup.string().required("Security answer is required"),
+    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      if (values?.otp) {
-        const { data } = await UnauthAxios.post(
-          "/patient/signup/web/verify",
-          values
-        );
-        console.log("data", data);
-        common.success(data?.message || "Registration successful");
-        localStorage.setItem("token", data?.data?.token);
-        login(data?.data);
-        setOtpSent(false);
-        resetForm();
-        onHide();
-      } else {
-        const { data } = await UnauthAxios.post("/patient/signup/web", values);
-        setOtpSent(true);
-        formik.setFieldValue("otp", data?.data?.otpCode);
-        common.success(data?.message);
-      }
+      const { data } = await UnauthAxios.post("/patient/web/signup", values);
+      common.success(data?.message || "Registration successful");
+      localStorage.setItem("token", data?.data?.token);
+      login(data?.data);
+      resetForm();
+      onHide();
     } catch (error) {
       common.error(error);
     } finally {
@@ -62,96 +57,101 @@ const RegisterModal = ({ show, onHide }) => {
     onSubmit: handleSubmit,
   });
 
-  const handleResendOTP = async () => {
-    try {
-      formik.setFieldValue("otp", "");
-      formik.submitForm();
-    } catch (error) {
-      common.error(error);
-    }
-  };
+
 
   return (
-    <Modal show={show} onHide={onHide} centered contentClassName="form-modal login-modal">
+    <Modal show={show} onHide={onHide} centered size="lg" contentClassName="form-modal login-modal">
       <Modal.Body>
-        {/* Logo */}
-        {/* <div className="text-center mb-3">
-          <img
-            src="/furr_baby_logo.svg"
-            alt="Furr Baby"
-            className="modal-logo"
-          />
-        </div> */}
-
-        {/* Title */}
         <h3 className="text-center modal-title">Register</h3>
-
-        {/* Form */}
         <form onSubmit={formik.handleSubmit}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control modal-input"
-              placeholder="Your Name"
-              name="name"
-              {...formik.getFieldProps("name")}
-            />
-            <ErrorMessage name="name" formik={formik} />
+          <div className="row">
+            <div className="mb-3 col-12 col-md-6">
+              <input
+                type="text"
+                className="form-control modal-input"
+                placeholder="Your Name"
+                name="name"
+                {...formik.getFieldProps("name")}
+              />
+              <ErrorMessage name="name" formik={formik} />
+            </div>
+            <div className="mb-3 col-12 col-md-6">
+              <input
+                type="text"
+                className="form-control modal-input"
+                placeholder="Phone Number"
+                name="phone"
+                {...formik.getFieldProps("phone")}
+              />
+              <ErrorMessage name="phone" formik={formik} />
+            </div>
+            <div className="mb-3 col-12 col-md-12">
+              <input
+                type="text"
+                className="form-control modal-input"
+                placeholder="Email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              <ErrorMessage name="email" formik={formik} />
+            </div>
+            <div className="mb-3 col-12 col-md-6">
+              <select
+                className="form-control form-select modal-input"
+                name="securityQuestion"
+                value={formik.values.securityQuestion}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                <option value="">Select Security Question</option>
+                {securityQuestions.map((question, idx) => (
+                  <option key={idx} value={question}>
+                    {question}
+                  </option>
+                ))}
+              </select>
+              <ErrorMessage name="securityQuestion" formik={formik} />
+            </div>
+            <div className="mb-3 col-12 col-md-6">
+              <input
+                type="text"
+                className="form-control modal-input"
+                placeholder="Security Answer"
+                name="securityAnswer"
+                {...formik.getFieldProps("securityAnswer")}
+              />
+              <ErrorMessage name="securityAnswer" formik={formik} />
+            </div>
+            <div className="mb-3 col-12 col-md-6">
+              <input
+                type="password"
+                className="form-control modal-input"
+                placeholder="Password"
+                name="password"
+                {...formik.getFieldProps("password")}
+              />
+              <ErrorMessage name="password" formik={formik} />
+            </div>
+            <div className="mb-3 col-12 col-md-6">
+              <input
+                type="password"
+                className="form-control modal-input"
+                placeholder="Confirm Password"
+                name="confirmPassword"
+                {...formik.getFieldProps("confirmPassword")}
+              />
+              <ErrorMessage name="confirmPassword" formik={formik} />
+            </div>
           </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control modal-input"
-              placeholder="Phone Number"
-              name="phone"
-              {...formik.getFieldProps("phone")}
-            />
-            <ErrorMessage name="phone" formik={formik} />
-          </div>
-
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control modal-input"
-              placeholder="Email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            <ErrorMessage name="email" formik={formik} />
-          </div>
-          {otpSent && (
-            <>
-              <div className="d-flex justify-content-end mb-1">
-                <a onClick={() => handleResendOTP()} className="resend-link">
-                  Resend OTP
-                </a>
-              </div>
-              <div className="mb-5">
-                <input
-                  type="text"
-                  className="form-control modal-input"
-                  placeholder="Enter OTP"
-                  name="otp"
-                  {...formik.getFieldProps("otp")}
-                />
-                <ErrorMessage name="otp" formik={formik} />
-              </div>
-            </>
-          )}
-
           <button
             type="submit"
             className="btn modal-btn w-100"
-            disabled={
-              formik.isSubmitting ||
-              (otpSent && formik.values?.otp?.length !== 4)
-            }
+            disabled={formik.isSubmitting}
           >
             Submit
           </button>
-
           <div className="text-center mt-3">
             <p className="mb-0">
               Already have an account?

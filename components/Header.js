@@ -8,6 +8,7 @@ import LoginModal from "./modal/LoginModal";
 import RegisterModal from "./modal/RegisterModal";
 import AskLoginModal from "./modal/askLoginModel";
 import { useAppContext } from "@/context/context";
+import ForgotPasswordModal from "./modal/forgotPassword";
 
 /*
   Condensed Header component:
@@ -17,7 +18,7 @@ import { useAppContext } from "@/context/context";
 */
 
 const Header = () => {
-  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin } =
+  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin, showForgotPassword, setShowForgotPassword } =
     useAppContext();
   const pathname = usePathname();
   const router = useRouter();
@@ -245,6 +246,7 @@ const Header = () => {
       </div>
 
       <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
+      <ForgotPasswordModal show={showForgotPassword} onHide={() => setShowForgotPassword(false)} />
       <RegisterModal show={showRegister} onHide={() => setShowRegister(false)} />
       <AskLoginModal show={showAskLogin} onHide={() => setShowAskLogin(false)} />
     </header>

@@ -2138,8 +2138,9 @@ section.page-section.community-chat-page .heading-secondary {
 
   .community-feed {
     padding: 10px;
-    height: calc(100vh - 61px);
+    height: calc(100vh - 73px);
     padding-bottom: 80px;
+    margin-top: 10px;
   }
 
   .header-info h1 {

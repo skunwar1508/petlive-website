@@ -42,8 +42,8 @@ export default function BlogDetail({ blogDetails }) {
       <section className="page-section blog-view-section">
         <div className="container">
           <div className="row mb-5">
-            <div className="col-lg-12 ">
-              <div href="/blog" className="blog-card large-card ">
+            <div className="col-lg-8 ">
+              <div className="blog-card large-card mb-5">
                 <img
                   src={
                     blogDetails?.coverImage?.path ||
@@ -53,20 +53,16 @@ export default function BlogDetail({ blogDetails }) {
                   className=" img-fluid"
                 />
               </div>
-            </div>
-          </div>
-          <div className="row mb-5">
-            <div className="col-lg-8 ">
-              <h3 className="heading-tertiary">
+              <h1 className="heading-secondary">
                 {blogDetails?.title || "Blog Title"}
-              </h3>
+              </h1>
               <p>
                 <DateFormate
                   format="DD MMMM YYYY"
                   date={blogDetails?.createdAt}
                 />
               </p>
-              <div
+              <div className="blogdetails_content"
                 dangerouslySetInnerHTML={{ __html: blogDetails?.content }}
               ></div>
             </div>

@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import common from "../../services/common";
 import authAxios from "../../services/authAxios";
 import { useAppContext } from "@/context/context";
+import axios from "axios";
+import ROOT_URL from "@/services/api-url";
 
 const ImageFormik = ({ children, action, name, setPreview, data, accepts, isHidePreview, minWidth, maxWidth }) => {
-    const { setIsLoading } = useAppContext();
+    const { setLoading } = useAppContext();
     const fileInputRef = useRef();
     const [file, setFile] = useState(null);
     const [currentData , setCurrentData] = useState(data);
@@ -54,14 +56,17 @@ const ImageFormik = ({ children, action, name, setPreview, data, accepts, isHide
 
     const submitForm = async (imageFile) => {
         try {
-            setIsLoading(true);
+            setLoading(true);
             const formData = new FormData();
             formData.append('coverImage', imageFile)
-            let url = "/media/upload";
-            const { data } = await authAxios({
+            let url = ROOT_URL + "/media/upload";
+            const { data } = await axios({
                 url: url,
                 method: "POST",
                 data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
             });
             formik.resetForm();
             setFile(data?.data);
@@ -69,9 +74,9 @@ const ImageFormik = ({ children, action, name, setPreview, data, accepts, isHide
             action && action(data?.data);
             setCurrentData(data?.data);
             setPreview && setPreview(imageFile)
-            setIsLoading(false);
+            setLoading(false);
         } catch (error) {
-            setIsLoading(false);
+            setLoading(false);
             console.error(error);
             common.error(error)
         }

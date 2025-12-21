@@ -19,7 +19,7 @@ const poppins = Poppins({
 });
 
 const Layout = ({ children, pageProps }) => {
-    console.log("Layout pageProps:", pageProps);
+    // console.log("Layout pageProps:", pageProps);
     return (
         <>
             <div className={`${fredoka.variable} ${poppins.variable}`}>

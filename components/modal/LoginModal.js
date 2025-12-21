@@ -38,7 +38,7 @@ const LoginModal = ({ show, onHide }) => {
       const token = data?.data?.token;
       if (token) {
         const maxAge = 7 * 24 * 60 * 60; // 7 days
-        const secureFlag = typeof window !== "undefined" && window.location.protocol === "https:" ? "Secure; " : "";
+        const secureFlag = typeof window !== "undefined" && window?.location?.protocol === "https:" ? "Secure; " : "";
         document.cookie = `token=${encodeURIComponent(token)}; Path=/; Max-Age=${maxAge}; ${secureFlag}SameSite=Lax`;
       }
       login(data?.data);

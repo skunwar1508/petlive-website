@@ -18,7 +18,7 @@ import ForgotPasswordModal from "./modal/forgotPassword";
 */
 
 const Header = () => {
-  const { user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin, showForgotPassword, setShowForgotPassword } =
+  const { breadcrumbs, isShowBreadcrumbs, user, logout, isLoggedIn, showLogin, setShowLogin, showRegister, setShowRegister, showAskLogin, setShowAskLogin, showForgotPassword, setShowForgotPassword } =
     useAppContext();
   const pathname = usePathname();
   const router = useRouter();
@@ -212,9 +212,23 @@ const Header = () => {
     <header className="site-header" ref={headerRef}>
       <div className="container">
         <div className="header-bar">
-          <Link href="/" className="logo-link" onClick={() => setOpen(false)}>
-            <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
-          </Link>
+
+          {isShowBreadcrumbs && breadcrumbs && breadcrumbs.title ? (
+            <div className="header-breadcrumbs" aria-label="Page location">
+              <button onClick={() => window.history.back()} className="back-btn">
+                ←
+              </button>
+
+              <div className="header-info">
+                <h1>{breadcrumbs.title}</h1>
+                <p>{breadcrumbs.description}</p>
+              </div>
+            </div>
+          ) : (
+            <Link href="/" className="logo-link" onClick={() => setOpen(false)}>
+              <img className="logo" src="/furr_baby_logo.svg" alt="Furr Baby" />
+            </Link>
+          )}
 
           <nav className="nav-desktop" aria-label="Primary">
             <ul className="desktop-links">

@@ -1,329 +1,179 @@
-// import { Icon } from "@iconify/react/dist/iconify.js";
 import CommunitypostChatCard from "./communityCommentChatCard";
 import authAxios from "../../services/authAxios";
 import ImageFormik from "../common/fileUpload";
 import { useAppContext } from "@/context/context";
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const CommunitypostList = ({ id, communityDetails }) => {
+const CommunityCommentList = ({ id }) => {
   const { user } = useAppContext();
+
   const [posts, setPosts] = useState([]);
-  const [newpost, setNewPost] = useState("");
+  const [newPost, setNewPost] = useState("");
   const [postImage, setPostImage] = useState(null);
-  const [pageData, setPageData] = useState({
-    loading: false,
-    page: 1,
-    limit: 10,
-    hasMore: true,
-  });
 
-  const scrollableDivRef = useRef(null);
+  /* 🔒 REFS (do NOT trigger re-render) */
+  const pageRef = useRef(1);
+  const hasMoreRef = useRef(true);
+  const loadingRef = useRef(false);
 
-  const fetchposts = useCallback(async () => {
+  const scrollRef = useRef(null);
+
+  /* ================= FETCH POSTS ================= */
+  const fetchPosts = async () => {
+    if (loadingRef.current || !hasMoreRef.current) return;
+
+    loadingRef.current = true;
+
     try {
-      const { data } = await authAxios.post(`/community/post/${id}/paginate`, {
-        page: pageData.page,
-        perPage: pageData.limit,
-      });
-      let resData = data?.data?.reverse() || [];
-      resData = resData.map((post) => {
-        post.isShowComment = false;
-        return post;
-      });
-      setPosts((prevposts) => [...resData, ...prevposts]);
-      setPageData((prevPageData) => ({
-        ...prevPageData,
-        hasMore: data.data.length === pageData.limit,
-        loading: false,
-      }));
+      const { data } = await authAxios.post(
+        `/community/post/${id}/paginate`,
+        {
+          page: pageRef.current,
+          perPage: 10,
+        }
+      );
+
+      const newPosts = (data?.data || [])
+        .reverse()
+        .map((p) => ({ ...p, isShowComment: false }));
+
+      setPosts((prev) => [...newPosts, ...prev]);
+
+      hasMoreRef.current = newPosts.length === 10;
+      pageRef.current += 1;
     } catch (error) {
       console.error("Error fetching posts:", error);
+    } finally {
+      loadingRef.current = false;
     }
-  }, [pageData.page, pageData.limit]);
+  };
 
+  /* ================= RESET ON ID CHANGE ================= */
   useEffect(() => {
     setPosts([]);
-    setPageData({
-      loading: false,
-      page: 1,
-      limit: 10,
-      hasMore: true,
-    });
+    pageRef.current = 1;
+    hasMoreRef.current = true;
+    loadingRef.current = false;
+    fetchPosts();
   }, [id]);
 
-  useEffect(() => {
-    fetchposts();
-  }, [fetchposts]);
-
-  // useEffect(() => {
-  //     socket.on('newpost', (post) => {
-  //         setPosts((prevposts) => [post, ...prevposts]);
-  //     });
-
-  //     return () => {
-  //         socket.off('newpost');
-  //     };
-  // }, [socket]);
-
-  const handleScroll = async (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    // if (scrollTop + clientHeight >= scrollHeight - 10 && pageData.hasMore && !pageData.loading) {
-    //     setPageData((prevPageData) => ({
-    //         ...prevPageData,
-    //         page: prevPageData.page + 1,
-    //         loading: true,
-    //     }));
-    // }
-    if (scrollTop === 0 && pageData.hasMore) {
-      setPageData((prevPageData) => ({
-        ...prevPageData,
-        page: prevPageData.page + 1,
-        loading: true,
-      }));
-      scrollableDivRef.current.scrollTop = scrollTop + 100;
+  /* ================= SCROLL (TOP LOAD) ================= */
+  const handleScroll = (e) => {
+    if (e.currentTarget.scrollTop === 0) {
+      fetchPosts();
+      e.currentTarget.scrollTop = 120;
     }
   };
 
-  const handleSubmit = (e) => {
+  /* ================= SUBMIT POST ================= */
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newpost.trim() || postImage?._id) {
-      // socket.emit('addpost', { content: newpost });
-      authAxios
-        .post(`/community/post/${id}`, {
-          content: newpost,
-          image: postImage?._id || null,
-        })
-        .then((response) => {
-          let post = response?.data?.data || {};
-          post.image = postImage || null;
-          post.createdAt = new Date();
-          post.authorDetails = {
-            firstName: user?.firstName || null,
-            lastName: user?.lastName || null,
-            _id: user?._id || null,
+    if (!newPost.trim() && !postImage?._id) return;
+
+    try {
+      const { data } = await authAxios.post(`/community/post/${id}`, {
+        content: newPost,
+        image: postImage?._id || null,
+      });
+
+      setPosts((prev) => [
+        ...prev,
+        {
+          ...data.data,
+          image: postImage,
+          isMyPost: true,
+          createdAt: new Date(),
+          authorDetails: {
+            _id: user?._id,
+            name: user?.name,
             profileImage: {
-              path: user?.profileImage?.path || null,
+              path: user?.profileImage?.path,
             },
-          };
-          post.isMyPost = true;
-          setPosts((prevposts) => [...prevposts, post]);
-          setNewPost("");
-          setPostImage(null);
-          setTimeout(() => {
-            scrollableDivRef.current.scrollTo({
-              top: scrollableDivRef.current.scrollHeight,
-              behavior: "smooth",
-            });
-          }, 300);
-        })
-        .catch((error) => {
-          console.error("Error adding post:", error);
-        });
-      // setPosts((prevposts) => [{ content: newpost }, ...prevposts]);
-    }
-  };
+          },
+        },
+      ]);
 
-  useEffect(() => {
-    if (scrollableDivRef.current) {
-      //  current scroll position
-      const scrollTop = scrollableDivRef.current.scrollTop;
-      const clientHeight = scrollableDivRef.current.clientHeight;
-      const scrollHeight = scrollableDivRef.current.scrollHeight;
-      // check if scroll position is at the bottom
-      if (scrollTop + clientHeight >= scrollHeight - 10) {
-        // scrollableDivRef.current.scrollTop = scrollHeight;
-        scrollableDivRef.current.scrollTo({
-          top: scrollHeight,
+      setNewPost("");
+      setPostImage(null);
+
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({
+          top: scrollRef.current.scrollHeight,
           behavior: "smooth",
         });
-      } else if (pageData?.page === 1) {
-        scrollableDivRef.current.scrollTo({
-          top: scrollHeight,
-          behavior: "smooth",
-        });
-      }
-      // check if scroll position is at the top
-      // if (scrollTop === 0) {
-      //     scrollableDivRef.current.scrollTop = scrollTop + 100;
-      // }
-      // check if scroll position is at the bottom
-      // if (scrollTop + clientHeight >= scrollHeight - 10) {
-      //     scrollableDivRef.current.scrollTop = scrollHeight;
-      // }
-      // scrollableDivRef.current.scrollTop = scrollableDivRef.current.scrollHeight;
+      }, 300);
+    } catch (error) {
+      console.error(error);
     }
-  }, [posts]);
-
-  const getVisibleMessageIds = () => {
-    if (scrollableDivRef.current) {
-      const { scrollTop, clientHeight } = scrollableDivRef.current;
-      const visibleMessages = [];
-      const children = scrollableDivRef.current.children;
-
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        const rect = child.getBoundingClientRect();
-        const parentRect = scrollableDivRef.current.getBoundingClientRect();
-
-        if (rect.top >= parentRect.top && rect.bottom <= parentRect.bottom) {
-          const messageId = posts[i]?._id; // Assuming each message has an `_id`
-          const selfViews = posts[i]?.selfViews;
-          const isMyPost = posts[i]?.isMyPost;
-          if (messageId && !selfViews && !isMyPost) {
-            visibleMessages.push(messageId);
-          }
-        }
-      }
-
-      return visibleMessages;
-    }
-    return [];
   };
 
-  const postViews = (ids) => {
-    authAxios
-      .post(`/community/postviews`, ids)
-      .then((response) => {
-        setPosts((prevposts) => {
-          return prevposts.map((post) => {
-            if (ids?.postIds?.includes(post._id)) {
-              return { ...post, selfViews: true };
-            }
-            return post;
-          });
-        });
-      })
-      .catch((error) => {
-        console.error("Error updating post views:", error);
-        // common.error(error);
-      });
+  /* ================= TOGGLE COMMENT ================= */
+  const toggleComment = (postId) => {
+    setPosts((prev) =>
+      prev.map((p) => ({
+        ...p,
+        isShowComment: p._id === postId ? !p.isShowComment : false,
+      }))
+    );
   };
 
-  useEffect(() => {
-    const handleScrollEvent = () => {
-      const visibleIds = getVisibleMessageIds();
-      // Perform any action with the visible IDs
-      if (visibleIds?.length > 0) {
-        postViews({ postIds: visibleIds });
-        // socket.emit('seenMessage', { messageIds: visibleIds });
-      }
-    };
-
-    const scrollableDiv = scrollableDivRef.current;
-    if (scrollableDiv) {
-      scrollableDiv.addEventListener("scroll", handleScrollEvent);
-    }
-
-    return () => {
-      if (scrollableDiv) {
-        scrollableDiv.removeEventListener("scroll", handleScrollEvent);
-      }
-    };
-  }, []);
-
-  const hideComment = (id) => {
-    setPosts((prevposts) => {
-      return prevposts.map((post) => {
-        if (post._id === id) {
-          post.isShowComment = !post.isShowComment;
-        } else {
-          post.isShowComment = false;
-        }
-        return post;
-      });
-    });
-  };
-
+  /* ================= JSX ================= */
   return (
     <>
       <div
-        className="communitChatListBody"
-        ref={scrollableDivRef}
+        ref={scrollRef}
+        className="community-feed"
         onScroll={handleScroll}
       >
-        {posts.map((post) => (
+        {posts.map((post, k) => (
           <CommunitypostChatCard
-            key={post?._id}
+            key={post._id+k}
             data={post}
-            hideComment={(id) => hideComment(id)}
+            hideComment={toggleComment}
           />
         ))}
       </div>
-      {/* <form className="patientWritMsgBx" onSubmit={handleSubmit}>
-                <input
-                    className="form-control"
-                    type="text"
-                    placeholder="Write here..."
-                    value={newpost}
-                    onChange={(e) => setNewPost(e.target.value)}
-                />
-                <div className='uploadImgBtn'>
-                    <ImageFormik isHidePreview={true} name="coverImage" action={(res) => {
-                        setPostImage(res || null);
-                    }}>
-                        {(f, hc, ref) => (
-                            <Fragment>
-                                <input ref={ref} type="file" className="form-control" onChange={(e) => { hc(e); }} />
 
-                            </Fragment>
-                        )}
-                    </ImageFormik>
-                    {postImage?.path ? (
-                        <img src={postImage?.path} alt='upload' className='img-fluid privew' />
-                    ) : (
-                        <img src='/assets/images/thumbnail-image.svg' alt='upload' className='img-fluid' />
-                    )}
-                    {postImage?.path && (
-                        <Icon onClick={() => setPostImage(null)} className='deleteImg' icon="material-symbols:delete-outline" />
-                    )}
+      {/* INPUT */}
+      <form className="community-input-bar" onSubmit={handleSubmit}>
+        {postImage?.path && (
+          <div className="image-preview">
+            <img src={postImage.path} />
+            <button type="button" onClick={() => setPostImage(null)}>
+              ✕
+            </button>
+          </div>
+        )}
 
-
-                </div>
-                <button className="btn sendbtn" type="submit">
-                    <Icon icon="material-symbols:send-outline" />
-                </button>
-            </form> */}
-      <form className="patientWritMsgBx" onSubmit={handleSubmit}>
-        <div className="msgBox">
+        <div className="input-row">
           <input
-            type="text"
-            className="form-control msg-input"
-            placeholder="Write Comment Here..."
-            value={newpost}
+            value={newPost}
             onChange={(e) => setNewPost(e.target.value)}
+            placeholder="Write a comment..."
           />
 
-          {/* Upload (hidden input + label as icon button) */}
           <ImageFormik
-            isHidePreview={true}
+            isHidePreview
             name="coverImage"
-            action={(res) => setPostImage(res || null)}
+            action={setPostImage}
           >
             {(f, hc, ref) => (
               <>
                 <input
-                  id="commentUpload"
                   ref={ref}
                   type="file"
                   className="d-none"
-                  onChange={(e) => hc(e)}
+                  onChange={hc}
                 />
-                <label
-                  htmlFor="commentUpload"
-                  className="icon-btn upload"
-                  title="Upload image"
-                >
-                  {/* <i className="material-symbols-outlined">upload</i> */}
-                  <img src="/images/upload-icon.svg" alt="Upload" />
-                </label>
+                <button type="button" className="transparent-btn" onClick={() => ref.current.click()}>
+                  📎
+                </button>
               </>
             )}
           </ImageFormik>
 
-          {/* Send */}
-          <button className="icon-btn send" type="submit" aria-label="Send">
-            {/* <i className="material-symbols-outlined">send</i> */}
-            <img src="/images/send-icon.svg" alt="Send" />
+          <button type="submit" className="send-btn">
+            ➤
           </button>
         </div>
       </form>
@@ -331,4 +181,4 @@ const CommunitypostList = ({ id, communityDetails }) => {
   );
 };
 
-export default CommunitypostList;
+export default CommunityCommentList;

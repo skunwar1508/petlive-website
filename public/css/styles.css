@@ -34,6 +34,14 @@ a:focus {
   box-shadow: 0 0 0;
 }
 
+button:focus {
+  box-shadow: 0 0 0;
+}
+
+input:focus {
+  box-shadow: 0 0 0;
+}
+
 .nav-link:focus {
   box-shadow: 0 0 0;
 }
@@ -1858,3 +1866,410 @@ section.page-section.community-chat-page .heading-secondary {
   color: #666;
   line-height: 1.6;
 }
+
+
+
+
+
+
+
+
+
+/* community new css start */
+.community-app-screen {
+  /* height: calc(100vh - 60px); */
+  /* display: flex; */
+  /* flex-direction: column; */
+  background: #fff8f2;
+  /* overflow: hidden; */
+}
+
+/* Header */
+.community-app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: #fff3ea;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.back-btn,
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.header-info {
+  flex: 1;
+}
+
+.header-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.header-info h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.header-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.community-app-body {
+  flex: 1;
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.community-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  scroll-behavior: smooth;
+  height: calc(100vh - 124px);
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.post-card {
+  display: flex;
+  gap: 12px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* Avatar */
+.post-avatar img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Body */
+.post-body {
+  flex: 1;
+}
+
+/* Header */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Text */
+.post-text {
+  margin: 6px 0 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Image */
+.post-image img {
+  width: 100%;
+  border-radius: 14px;
+  margin-top: 6px;
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Actions */
+.post-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.post-actions .action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #7a5a3a;
+  padding: 0;
+}
+
+.post-actions .action img {
+  width: 16px;
+  height: 16px;
+}
+
+.post-actions .action.active {
+  color: #c08a4d;
+}
+
+.post-comments {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.community-input-bar {
+    background: #ffffff;
+    padding: 10px 12px;
+    border-top: 0px solid #eee;
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    box-shadow: 0 0 10px #00000033;
+    border-radius: 30px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Input */
+.input-row input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: #f3ece7;
+  font-size: 14px;
+}
+
+/* Upload & Send */
+.input-row button.transparent-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Send Button */
+.send-btn {
+  background: #c08a4d;
+  color: #fff;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.image-preview {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 6px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-preview button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.flagDropdown button {
+  background: none !important;
+  border: none !important;
+  padding: 0;
+}
+
+.flagDropdown img {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 480px) {
+  .post-card {
+    padding: 10px;
+  }
+
+  .post-text {
+    font-size: 13px;
+  }
+
+  .community-feed {
+    padding: 10px;
+    height: calc(100vh - 62px);
+    padding-bottom: 80px;
+  }
+}
+
+/* comment design */
+.commentsComntyWrp {
+  background: #fff;
+  border-radius: 16px;
+  /* padding: 12px; */
+  /* margin-top: 12px; */
+}
+
+.articleCommetList {
+  margin-bottom: 12px;
+}
+
+.articleCommentTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: #444;
+}
+
+.aritcleCommentListBody {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Reply indentation */
+.aritcleCommentListBody.reply {
+  margin-left: 36px;
+}
+
+.aritcleUseImg img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.aritcleCommentContent {
+  flex: 1;
+  background: #f7f3ef;
+  padding: 10px 12px;
+  border-radius: 14px;
+  position: relative;
+}
+
+.aritcleCommentContent h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.aritcleCommentContent p {
+  font-size: 13px;
+  margin: 4px 0 0;
+  line-height: 1.4;
+  color: #444;
+}
+
+.commentTime {
+  font-size: 11px;
+  color: #888;
+}
+
+.viewcommentbtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  color: #c08a4d;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.patientWritMsgBx {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.patientWritMsgBx input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  border-radius: 18px;
+  background: #f1ece7;
+  font-size: 13px;
+}
+
+.patientWritMsgBx button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #c08a4d;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#scrollableDivAll {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.hide-footer footer.footer-section {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .aritcleCommentContent {
+    font-size: 12px;
+  }
+
+  .aritcleUseImg img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.flagDropdown .btn:hover {
+  box-shadow: 0 0 0;
+}
+
+.chat-image {
+  cursor: zoom-in;
+}
+
+/* community new css end */

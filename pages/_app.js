@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 import { ToastContainer } from "react-toastify";
 import { AppProvider } from "@/context/context";
@@ -46,7 +47,7 @@ const MyApp = ({ Component, pageProps }) => {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.furrbaby.in";
   const canonicalPath = (typeof window === "undefined"
     ? pageProps?.asPath || router.asPath || "/"
-    : window.location.pathname || "/"
+    : window?.location?.pathname || "/"
   );
   const canonical = baseUrl + canonicalPath;
 

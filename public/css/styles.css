@@ -2057,14 +2057,13 @@ section.page-section.community-chat-page .heading-secondary {
 
 /* Input */
 .input-row input {
-  flex: 1;
   border: none;
   outline: none;
   padding: 10px 14px;
   border-radius: 18px;
   background: #f3ece7;
   font-size: 14px;
-  width: calc(100%);
+  width: calc(100% - 83px);
 }
 
 /* Upload & Send */

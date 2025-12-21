@@ -15,7 +15,7 @@ const CommunityView = () => {
     const fetchCommunity = async () => {
       try {
         setLoading(true);
-        const { data } = await authAxios.get(`/community/public/get/${id}`);
+        const { data } = await authAxios.get(`/community/get/${id}`);
         console.log("Fetched community details:", data);
         setCommunityDetails(data?.data || null);
         setBreadcrumbs({
@@ -48,33 +48,33 @@ const CommunityView = () => {
     }
   }, []);
 
-  if (loading) {
-    return (
-      <div
-      className="loading"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "80vh",
-        fontSize: "1.5rem",
-        fontWeight: "500"
-      }}
-      >
-      Loading...
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div
+  //     className="loading"
+  //     style={{
+  //       display: "flex",
+  //       alignItems: "center",
+  //       justifyContent: "center",
+  //       minHeight: "80vh",
+  //       fontSize: "1.5rem",
+  //       fontWeight: "500"
+  //     }}
+  //     >
+  //     Loading...
+  //     </div>
+  //   );
+  // }
 
-  if (!communityDetails) {
-    return null;
-  }
+  // if (!communityDetails) {
+  //   return null;
+  // }
   return (
     <div className="community-app-screen">
 
       {/* Body */}
       <main className="community-app-body">
-        {!communityDetails.isMember ? (
+        {communityDetails?.isMember ? (
           <CommunityCommentList
             id={communityDetails._id}
             communityDetails={communityDetails}

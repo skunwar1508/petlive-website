@@ -2061,6 +2061,7 @@ section.page-section.community-chat-page .heading-secondary {
   border-radius: 18px;
   background: #f3ece7;
   font-size: 14px;
+  width: calc(100%);
 }
 
 /* Upload & Send */

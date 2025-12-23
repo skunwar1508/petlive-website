@@ -47,6 +47,7 @@ export default function Communities({ communityData }) {
     setCommunityStatus(status);
     router.push(`/community/${status}`);
   };
+  console.log("communityData:", communityData);
 
   return (
     <>
@@ -54,7 +55,7 @@ export default function Communities({ communityData }) {
       <section key={type || "new"} className="page-section community-page">
         <h1 className="heading-secondary d-flex justify-content-center">
           <div className="communityStatusTabs">
-            <span
+            {/* <span
               className={commmunityStatus === "new" ? "active" : ""}
               onClick={() => handleChangeCommunityStatus("new")}
             >
@@ -65,7 +66,8 @@ export default function Communities({ communityData }) {
               onClick={() => handleChangeCommunityStatus("my")}
             >
               My Community
-            </span>
+            </span> */}
+            <span className="active">Community</span>
           </div>
         </h1>
         <div className="container">
@@ -76,7 +78,9 @@ export default function Communities({ communityData }) {
                 key={d?._id ?? index}
                 className="col-lg-4 d-flex flex-column gap-3"
               >
-                <Link href={`/community/info/${d?._id}`} className="blog-card">
+                <Link href={
+                  d?.isJoined ? `/community/view/${d?._id}`: `/community/info/${d?._id}`
+                } className="blog-card">
                   <img
                     src={d?.image?.path || "/assets/images/default.png"}
                     alt={d?.name}

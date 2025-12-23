@@ -20,7 +20,8 @@ const CommunityView = () => {
         setCommunityDetails(data?.data || null);
         setBreadcrumbs({
           title: data?.data?.name || 'Community',
-          description: `${data?.data?.members?.length || 0} members`
+          description: `${data?.data?.members?.length || 0} members`,
+          _id: data?.data?._id
         });
         setIsShowBreadcrumbs(true);
       } catch (error) {

@@ -220,7 +220,7 @@ const Header = () => {
               </button>
 
               <div className="header-info">
-                <h1>{breadcrumbs.title}</h1>
+                <h1><Link href={`/community/info/${breadcrumbs?._id}`}>{breadcrumbs.title}</Link></h1>
                 <p>{breadcrumbs.description}</p>
               </div>
             </div>
